@@ -1,0 +1,36 @@
+    /* "accent": "#03dac4",
+    "backdrop": "rgba(0, 0, 0, 0.5)",
+    "background": "#f6f6f6",
+    "disabled": "rgba(0, 0, 0, 0.26)",
+    "error": "#B00020",
+    "notification": "#f50057",
+    "onBackground": "#000000",
+    "onSurface": "#000000",
+    "placeholder": "rgba(0, 0, 0, 0.54)",
+    "primary": "#6200ee",
+    "surface": "#ffffff",
+    "text": "#000000", */
+
+    * {
+        color: #03dac4;
+        color: #f6f6f6;
+        color: #B00020;
+        color: #f50057;
+        color: rgba(0, 0, 0, 0.54);
+        color: rgba(0, 0, 0, 0.26);
+        color: #6200ee;
+    }
+
+    * {
+        color: #121212;
+        color: #303030;
+        color: #1c1c1c;
+        color: #111111;
+        color: rgba(255, 255, 255, 0.54);
+        color: rgba(255, 255, 255, 0.26);
+        color: #242424;
+    }
+
+    * {
+        color: #ffaf4d;
+    }
