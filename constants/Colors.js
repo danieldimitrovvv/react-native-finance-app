@@ -29,7 +29,7 @@ export default {
   blue: {
     dark: "#003AAD",
     main: "#38ACEC",
-    pale: "#38ACEC",
+    pale: "#82CAFF",
     range: ["#42B6F6", "#74E8FF", "#2EA2E2", "#067ABA", "#00FFFF", "#0066A6"]
   },
   red: {

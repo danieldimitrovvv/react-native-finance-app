@@ -1,24 +1,23 @@
 import React from 'react'
 import { StyleSheet, View, ScrollView, Platform } from 'react-native'
-import { Provider, Surface, Text, ActivityIndicator } from 'react-native-paper'
+import { Provider } from 'react-native-paper'
 
 import { HeaderButtons, Item } from 'react-navigation-header-buttons'
 
-import Colors from '../constants/Colors'
+import Colors from '../../constants/Colors'
 
-import HeaderButton from '../components/UI/HeaderButton'
-import Dialog from '../components/UI/Dialog'
-import Card from '../components/UI/Card'
+import HeaderButton from '../../components/UI/HeaderButton'
+import ActivityIndicator from '../../components/UI/ActivityIndicator'
+import Dialog from '../../components/UI/Dialog'
+import AccountForm from '../../components/forms/AccountForm'
 
-import UserRest from '../rests/UserRest'
-import MainScreen from './MainScreen'
-import AccountForm from '../components/forms/AccountForm'
-
-export default class AddAccountsScreen extends MainScreen {
+export default class AddAccountsScreen extends React.Component {
   static navigationOptions = navData => {
     return {
-      // ...super.navigationOptions(navData),
       headerTitle: 'Accounts',
+      headerStyle: {
+        backgroundColor: Platform.OS === 'android' ? Colors['blue'].dark : ''
+      },
       headerRight: () => (
         <HeaderButtons HeaderButtonComponent={HeaderButton}>
           <Item
@@ -34,14 +33,20 @@ export default class AddAccountsScreen extends MainScreen {
   constructor (props) {
     super(props)
     this.state = {
-      ...super.constructor().state,
+      theme: 'blue',
+      isLoading: false,
+      dialog: {
+        visible: false,
+        message: null,
+        title: null,
+        onDismiss: this._hideDialog,
+        buttons: { ok: { onPress: this._hideDialog, label: 'ok' } }
+      },
       account: null
     }
   }
 
-  componentDidMount () {
-    super.componentDidMount()
-  }
+  componentDidMount () {}
 
   _hideDialog = () =>
     this.setState(state => ({ dialog: { ...state.dialog, visible: false } }))
@@ -52,9 +57,9 @@ export default class AddAccountsScreen extends MainScreen {
         <View style={styles.container}>
           <Dialog {...this.state.dialog} />
           {this.state.isLoading ? (
-            <ActivityIndicator animating={true} size='large' />
+            <ActivityIndicator />
           ) : (
-              <AccountForm {...this.props}/>
+            <AccountForm {...this.props} />
           )}
         </View>
       </Provider>

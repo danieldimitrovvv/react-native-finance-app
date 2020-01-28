@@ -1,6 +1,7 @@
 import AuthRest from './AuthRest'
 import Categories from '../constants/storage/categories'
 import MainRest from './MainRest'
+import Category from '../models/Category'
 
 class CategoryRest extends MainRest {
   //income and expense
@@ -23,8 +24,23 @@ class CategoryRest extends MainRest {
     })
   }
 
+  add (name, type, limit) {
+    const id = (new Date().getTime() * new Date().getTime()) / 13
+    const userID = AuthRest.getAuthUserId()
+    this.accounts.push(new Category(id, userID, name, type, 0, limit))
+
+    return new Promise((resolve, reject) => {
+      setTimeout(() => {
+        if (id) resolve(id)
+        else reject('Please login?')
+      }, 300)
+    })
+  }
+
   addSum = (categoryID, sum) => {
-    const updateCategoryIndex = this.categories.findIndex(cat => cat.id == categoryID)
+    const updateCategoryIndex = this.categories.findIndex(
+      cat => cat.id == categoryID
+    )
     const updateCategory = {
       ...this.categories[updateCategoryIndex]
     }

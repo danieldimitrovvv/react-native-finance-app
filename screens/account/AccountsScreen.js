@@ -1,32 +1,43 @@
 import React from 'react'
 import { StyleSheet, View, ScrollView, Platform } from 'react-native'
-import { Provider, Surface, Text, ActivityIndicator } from 'react-native-paper'
+import { Provider, Text, Title } from 'react-native-paper'
 
 import { HeaderButtons, Item } from 'react-navigation-header-buttons'
 
-import Colors from '../constants/Colors'
+import Colors from '../../constants/Colors'
 
-import HeaderButton from '../components/UI/HeaderButton'
-import Dialog from '../components/UI/Dialog'
-import Card from '../components/UI/Card'
+import HeaderButton from '../../components/UI/HeaderButton'
 
-import UserRest from '../rests/UserRest'
-import MainScreen from './MainScreen'
-import AccountRest from '../rests/AccountRest'
+import ActivityIndicator from '../../components/UI/ActivityIndicator'
+import Dialog from '../../components/UI/Dialog'
+import Card from '../../components/UI/Card'
 
-export default class AccountsScreen extends MainScreen {
+import AccountRest from '../../rests/AccountRest'
+
+export default class AccountsScreen extends React.Component {
   static navigationOptions = navData => {
-   
     return {
-      ...super.navigationOptions(navData),
       headerTitle: 'Accounts',
+      headerStyle: {
+        backgroundColor: Platform.OS === 'android' ? Colors['blue'].dark : ''
+      },
+      headerLeft: () => (
+        <HeaderButtons HeaderButtonComponent={HeaderButton}>
+          <Item
+            title='Menu'
+            iconName='ios-menu'
+            onPress={() => {
+              navData.navigation.toggleDrawer()
+            }}
+          />
+        </HeaderButtons>
+      ),
       headerRight: () => (
         <HeaderButtons HeaderButtonComponent={HeaderButton}>
           <Item
             title='Add'
             iconName={Platform.OS === 'android' ? 'md-add' : 'ios-add'}
             onPress={() => {
-              console.log(navData.navigation)
               navData.navigation.navigate('AddAccount')
             }}
           />
@@ -38,14 +49,20 @@ export default class AccountsScreen extends MainScreen {
   constructor (props) {
     super(props)
     this.state = {
-      ...super.constructor().state,
+      theme: 'blue',
+      isLoading: false,
+      dialog: {
+        visible: false,
+        message: null,
+        title: null,
+        onDismiss: this._hideDialog,
+        buttons: { ok: { onPress: this._hideDialog, label: 'ok' } }
+      },
       accounts: []
     }
-    console.log('ACCOUNT STATE:', this.state)
   }
 
   componentDidMount () {
-    super.componentDidMount()
     this.setState({ isLoading: true })
     AccountRest.getAccounts()
       .then(accounts => {
@@ -71,9 +88,9 @@ export default class AccountsScreen extends MainScreen {
         <View style={styles.container}>
           <Dialog {...this.state.dialog} />
           {this.state.isLoading ? (
-            <ActivityIndicator animating={true} size='large' />
+            <ActivityIndicator />
           ) : this.state.accounts.length === 0 ? (
-            <Text>Not Added accounts yet!</Text>
+            <Title>Not Added accounts yet!</Title>
           ) : (
             <ScrollView>
               {this.state.accounts.map(account =>

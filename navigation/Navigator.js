@@ -14,9 +14,10 @@ import Colors from '../constants/Colors'
 import UserDetailScreen from '../screens/UserDetailScreen'
 import AuthScreen from '../screens/AuthScreen'
 import StartupScreen from '../screens/StartupScreen'
-import AccountsScreen from '../screens/AccountsScreen'
-import AuthRest from '../rests/AuthRest'
-import AddAccountsScreen from '../screens/AddAccountsScreen'
+import AccountsScreen from '../screens/account/AccountsScreen'
+import AddAccountsScreen from '../screens/account/AddAccountsScreen'
+import CategoriesScreen from '../screens/category/CategoriesScreen'
+import AddCategoriesScreen from '../screens/category/AddCategoriesScreen'
 
 const defaultStackNavOptions = {
   headerStyle: {
@@ -56,6 +57,20 @@ const AccountsNavigator = createStackNavigator(
     defaultNavigationOptions: defaultStackNavOptions
   }
 )
+
+const CategoriesNavigator = createStackNavigator(
+  {
+    Categories: CategoriesScreen,
+    AddCategory: AddCategoriesScreen
+  },
+  {
+    navigationOptions: {
+      drawerLabel: 'Accounts'
+    },
+    defaultNavigationOptions: defaultStackNavOptions
+  }
+)
+
 
 const StatisticsNavigator = createStackNavigator(
   {
@@ -100,7 +115,7 @@ const tabScreenConfig = {
       tabBarIcon: tabInfo => {
         return <Ionicons name='ios-analytics' size={25} color='white' />
       },
-      tabBarColor: Colors['blue'].pale,
+      tabBarColor: Colors['blue'].main,
       tabBarLabel:
         Platform.OS === 'android' ? (
           <Text style={{ fontFamily: 'open-sans-bold', color: 'white' }}>
@@ -129,6 +144,27 @@ const tabScreenConfig = {
           </Text>
         ) : (
           'Accounts'
+        )
+    }
+  },
+  Categories: {
+    screen: CategoriesNavigator,
+    navigationOptions: {
+      tabBarIcon: tabInfo => {
+        return (
+          <Ionicons name='ios-list' size={25} color='white' />
+        )
+      },
+      tabBarColor: Colors['blue'].pale,
+      tabBarLabel:
+        Platform.OS === 'android' ? (
+          <Text
+            style={{ fontFamily: 'open-sans-bold', color: 'white' }}
+          >
+            Categories
+          </Text>
+        ) : (
+          'Categories'
         )
     }
   }
