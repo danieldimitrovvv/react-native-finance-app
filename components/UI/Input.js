@@ -1,6 +1,7 @@
 import React, { useReducer, useEffect } from 'react'
 import { View, Text, TextInput, StyleSheet } from 'react-native'
 import Colors from '../../constants/Colors'
+import ErrorText from './ErrorText'
 
 const INPUT_CHANGE = 'INPUT_CHANGE'
 const INPUT_BLUR = 'INPUT_BLUR'
@@ -86,13 +87,7 @@ const Input = props => {
         blurOnSubmit={true}
       />
       {!inputState.isValid && inputState.touched && (
-        <View
-          style={{ ...styles.errorContainer, ...props.styles?.errorContainer }}
-        >
-          <Text style={{ ...styles.errorText, ...props.styles?.errorText }}>
-            {props.errorText}
-          </Text>
-        </View>
+        <ErrorText errorText={props.errorText} />
       )}
     </View>
   )
@@ -114,16 +109,8 @@ const styles = StyleSheet.create({
     borderBottomColor: '#ccc',
     borderBottomWidth: 1
   },
-  errorContainer: {
-    marginVertical: 5
-  },
-  errorText: {
-    fontFamily: 'open-sans',
-    color: 'red',
-    fontSize: 13
-  },
   required: {
-    color: 'red',
+    color: 'red'
   }
 })
 

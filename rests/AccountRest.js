@@ -24,7 +24,16 @@ class AccountRest extends MainRest {
     })
   }
 
-  add(name, availability) {
+  getAccountById = accountId => {
+    let account = this.accounts.find(account => account.id == accountId)
+    return new Promise((resolve, reject) => {
+      setTimeout(() => {
+        if (account) resolve(account)
+        else reject('Missing account!!!')
+      }, 300)
+    })
+  }
+  add (name, availability) {
     const id = (new Date().getTime() * new Date().getTime()) / 13
     const userID = AuthRest.getAuthUserId()
     this.accounts.push(

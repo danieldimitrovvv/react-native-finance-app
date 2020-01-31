@@ -87,6 +87,12 @@ export default class CategoriesScreen extends React.Component {
     return this.state.categories.map(category => ({
       key: category.id,
       title: category.name,
+      onPress: () => {
+        this.props.navigation.navigate('CategoryDetails', {
+          categoryId: category.id,
+          categoryTitle: category.name
+        })
+      },
       description: (
         <Text
           style={{
@@ -133,7 +139,7 @@ export default class CategoriesScreen extends React.Component {
             <Title>Not Added categories yet!</Title>
           ) : (
             <ScrollView>
-              <List data={this._mapCategories()} titleNumberOfLines={2}/>
+              <List data={this._mapCategories()} titleNumberOfLines={2} />
             </ScrollView>
           )}
         </View>

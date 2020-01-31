@@ -24,6 +24,16 @@ class CategoryRest extends MainRest {
     })
   }
 
+  getCategoryById = categoryId => {
+    let category = this.categories.find(cat => cat.id == categoryId)
+    return new Promise((resolve, reject) => {
+      setTimeout(() => {
+        if (category) resolve(category)
+        else reject('Missing category!!!')
+      }, 300)
+    })
+  }
+
   add (name, type, limit) {
     const id = (new Date().getTime() * new Date().getTime()) / 13
     const userID = AuthRest.getAuthUserId()

@@ -16,8 +16,11 @@ import AuthScreen from '../screens/AuthScreen'
 import StartupScreen from '../screens/StartupScreen'
 import AccountsScreen from '../screens/account/AccountsScreen'
 import AddAccountsScreen from '../screens/account/AddAccountsScreen'
+import AccountDetailsScreen from '../screens/account/AccountDetailsScreen'
+
 import CategoriesScreen from '../screens/category/CategoriesScreen'
 import AddCategoriesScreen from '../screens/category/AddCategoriesScreen'
+import CategoryDetailsScreen from '../screens/category/CategoryDetailsScreen'
 
 const defaultStackNavOptions = {
   headerStyle: {
@@ -48,7 +51,8 @@ const ScanQRCodeNavigator = createStackNavigator(
 const AccountsNavigator = createStackNavigator(
   {
     Accounts: AccountsScreen,
-    AddAccount: AddAccountsScreen
+    AddAccount: AddAccountsScreen,
+    AccountDetails: AccountDetailsScreen
   },
   {
     navigationOptions: {
@@ -61,16 +65,16 @@ const AccountsNavigator = createStackNavigator(
 const CategoriesNavigator = createStackNavigator(
   {
     Categories: CategoriesScreen,
-    AddCategory: AddCategoriesScreen
+    AddCategory: AddCategoriesScreen,
+    CategoryDetails: CategoryDetailsScreen
   },
   {
     navigationOptions: {
-      drawerLabel: 'Accounts'
+      drawerLabel: 'Categories'
     },
     defaultNavigationOptions: defaultStackNavOptions
   }
 )
-
 
 const StatisticsNavigator = createStackNavigator(
   {
@@ -130,16 +134,12 @@ const tabScreenConfig = {
     screen: AccountsNavigator,
     navigationOptions: {
       tabBarIcon: tabInfo => {
-        return (
-          <Ionicons name='ios-card' size={25} color='white' />
-        )
+        return <Ionicons name='ios-card' size={25} color='white' />
       },
       tabBarColor: Colors['blue'].dark,
       tabBarLabel:
         Platform.OS === 'android' ? (
-          <Text
-            style={{ fontFamily: 'open-sans-bold', color: 'white' }}
-          >
+          <Text style={{ fontFamily: 'open-sans-bold', color: 'white' }}>
             Accounts
           </Text>
         ) : (
@@ -151,16 +151,12 @@ const tabScreenConfig = {
     screen: CategoriesNavigator,
     navigationOptions: {
       tabBarIcon: tabInfo => {
-        return (
-          <Ionicons name='ios-list' size={25} color='white' />
-        )
+        return <Ionicons name='ios-list' size={25} color='white' />
       },
       tabBarColor: Colors['blue'].pale,
       tabBarLabel:
         Platform.OS === 'android' ? (
-          <Text
-            style={{ fontFamily: 'open-sans-bold', color: 'white' }}
-          >
+          <Text style={{ fontFamily: 'open-sans-bold', color: 'white' }}>
             Categories
           </Text>
         ) : (

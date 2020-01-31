@@ -107,6 +107,14 @@ export default class AccountsScreen extends React.Component {
     return account.type !== 'deleted' ? (
       <Card
         key={account.id}
+        card={{
+          onPress: () => {
+            this.props.navigation.navigate('AccountDetails', {
+              accountId: account.id,
+              accountTitle: account.name
+            })
+          }
+        }}
         header={{
           title: account.name,
           subtitle: account.type,

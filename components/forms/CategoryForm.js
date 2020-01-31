@@ -1,6 +1,6 @@
 import * as React from 'react'
 import { StyleSheet, KeyboardAvoidingView, View } from 'react-native'
-import { Text } from 'react-native-paper'
+import { Text, Surface } from 'react-native-paper'
 
 import Card from '../UI/Card'
 import Input from '../UI/Input'
@@ -11,10 +11,10 @@ import CategoryRest from '../../rests/CategoryRest'
 import RadioButtonList from '../UI/RadioButtonList'
 import CustomToggleButton from '../UI/ToggleButton'
 import CustomToggleButtonGroup from '../UI/ToggleButtonGroup'
+import ErrorText from '../UI/ErrorText'
 
 export default class CategoryForm extends React.Component {
   constructor (props) {
-    console.log(props.navigation)
     super(props)
     this.state = {
       name: {
@@ -23,7 +23,9 @@ export default class CategoryForm extends React.Component {
       },
       type: {
         value: null,
-        isValid: false
+        isValid: false,
+        touch: false,
+        errorMessage: 'Please select a category type!!!'
       },
       limit: {
         value: null,
@@ -132,21 +134,27 @@ export default class CategoryForm extends React.Component {
               type={'row'}
             >
               <CustomToggleButton icon='cash' value='cash' />
-              <CustomToggleButton icon='percent' value='%' />
+              <CustomToggleButton icon='percent' value='percent' />
             </CustomToggleButtonGroup>
+
             <View style={styles.typeContainer}>
               <Text style={styles.typeLabel}>Type</Text>
-              <RadioButtonList
-                data={[
-                  { title: 'Income', value: 'income' },
-                  { title: 'Expense', value: 'expense' }
-                ]}
-                onValueChange={value =>
-                  this.setState(state => ({
-                    type: { ...state.type, value }
-                  }))
-                }
-              />
+              <Surface style={styles.typeRadioBtnContainer}>
+                <RadioButtonList
+                  data={[
+                    { title: 'Income', value: 'income' },
+                    { title: 'Expense', value: 'expense' }
+                  ]}
+                  onValueChange={value =>
+                    this.setState(state => ({
+                      type: { ...state.type, value, isValid: true, touch: true }
+                    }))
+                  }
+                />
+              </Surface>
+              {this.state.type.touch && !this.state.type.isValid && (
+                <ErrorText errorText={this.state.type.errorMessage}/>
+              )}
             </View>
           </Card>
         </KeyboardAvoidingView>
@@ -171,15 +179,19 @@ const styles = StyleSheet.create({
     fontFamily: 'open-sans-bold'
   },
   typeContainer: {
-    flex: 1,
-    flexDirection: 'row',
+    flexDirection: 'column',
     width: '100%',
-    margin: 8,
-    padding: 5
+    paddingVertical: 8,
+    paddingHorizontal: 15,
+  },
+  typeRadioBtnContainer: {
+    flexDirection: 'row',
+    justifyContent:'space-around',
+    width: '100%',
   },
   typeLabel: {
+    width: '100%',
     color: 'black',
-    fontFamily: 'open-sans-bold',
-    marginVertical: 8
+    fontFamily: 'open-sans-bold'
   }
 })
