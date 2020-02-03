@@ -2,12 +2,10 @@ import React from 'react'
 import {
   StyleSheet,
   View,
-  ScrollView,
   Platform,
   Dimensions
 } from 'react-native'
-import { Provider, Title, Text, DataTable } from 'react-native-paper'
-import { Ionicons } from '@expo/vector-icons'
+import { Provider, Title, Text } from 'react-native-paper'
 
 import Colors from '../../constants/Colors'
 
@@ -17,15 +15,14 @@ import Card from '../../components/UI/Card'
 
 import AccountRest from '../../rests/AccountRest'
 import TransactionRest from '../../rests/TransactionRest'
-import formatDate from '../../components/FormatDate'
+import TransactionsDataTable from '../../components/dataTables/TransactionsDataTable'
+import UsersDataTable from '../../components/dataTables/UsersDataTable'
+
 
 export default class AccountDetailsScreen extends React.Component {
   static navigationOptions = navData => {
     return {
       headerTitle: navData.navigation.getParam('accountTitle'),
-      headerStyle: {
-        backgroundColor: Platform.OS === 'android' ? Colors['blue'].dark : ''
-      }
     }
   }
 
@@ -161,7 +158,7 @@ export default class AccountDetailsScreen extends React.Component {
           : this._renderAccountSharedUsersTable()}
       </Card>
     ) : (
-      <Title style={styles.message}>Not Added account yet!</Title>
+      <Title style={styles.message}>Not Existing account!</Title>
     )
   }
 
@@ -170,39 +167,11 @@ export default class AccountDetailsScreen extends React.Component {
     const Element = !transactions ? (
       <Title style={styles.message}>Not Added transactions yet!</Title>
     ) : (
-      <DataTable style={styles.dataTable}>
-        <DataTable.Header>
-          <DataTable.Title>Date</DataTable.Title>
-          <DataTable.Title>$</DataTable.Title>
-          <DataTable.Title numeric></DataTable.Title>
-        </DataTable.Header>
-        <ScrollView style={styles.dataTableRows}>
-          {transactions.map(t => (
-            <DataTable.Row>
-              <DataTable.Cell>
-                <Text>{formatDate(t.dateOfCompletion)}</Text>
-              </DataTable.Cell>
-              <DataTable.Cell>{t.sum}</DataTable.Cell>
-              <DataTable.Cell numeric>
-                {this._renderTransferTypeIcon(t.type)}
-              </DataTable.Cell>
-            </DataTable.Row>
-          ))}
-        </ScrollView>
-        {this.state.transactionPagination.numberOfPages > 1 && (
-          <DataTable.Pagination
-            page={this.state.transactionPagination.page}
-            numberOfPages={this.state.transactionPagination.numberOfPages}
-            onPageChange={this._changeTransactionsPage}
-            label={
-              this.state.transactionPagination.page +
-              1 +
-              ' of ' +
-              this.state.transactionPagination.numberOfPages
-            }
-          />
-        )}
-      </DataTable>
+      <TransactionsDataTable
+        transactions={transactions}
+        transactionPagination={this.state.transactionPagination}
+        changeTransactionsPage={this._changeTransactionsPage}
+      />
     )
 
     return Element
@@ -213,43 +182,9 @@ export default class AccountDetailsScreen extends React.Component {
     const Element = !sharedList ? (
       <Title style={styles.message}>Not Added users yet!</Title>
     ) : (
-      <DataTable style={styles.dataTable}>
-        <DataTable.Header>
-          <DataTable.Title>Name</DataTable.Title>
-          <DataTable.Title>Email</DataTable.Title>
-          <DataTable.Title numeric>Years</DataTable.Title>
-        </DataTable.Header>
-        <ScrollView style={styles.dataTableRows}>
-          {sharedList.map(u => (
-            <DataTable.Row>
-              <DataTable.Cell>{u.name}</DataTable.Cell>
-              <DataTable.Cell>{u.email}</DataTable.Cell>
-              <DataTable.Cell numeric>{u.age ? u.age : '-'}</DataTable.Cell>
-            </DataTable.Row>
-          ))}
-        </ScrollView>
-      </DataTable>
+      <UsersDataTable users={sharedList} />
     )
     return Element
-  }
-
-  _renderTransferTypeIcon = type => {
-    //income expense transfer
-    let name = null
-    let color = 'black'
-
-    if (type === 'income') {
-      name = Platform.OS === 'android' ? 'md-arrow-up' : 'ios-arrow-up'
-      color = Colors.blue.main
-    } else if (type === 'expense') {
-      name = Platform.OS === 'android' ? 'md-arrow-down' : 'ios-arrow-down'
-
-      color = Colors.red.main
-    } else {
-      name = Platform.OS === 'android' ? 'md-sync' : 'ios-sync'
-      color = Colors.blue.dark
-    }
-    return <Ionicons name={name} size={25} color={color} />
   }
 }
 
@@ -257,6 +192,7 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     width: '100%',
+    height:'100%',
     justifyContent: 'center',
     alignItems: 'center'
   },
@@ -268,12 +204,6 @@ const styles = StyleSheet.create({
     paddingHorizontal: 15,
     fontSize: 26,
     fontFamily: 'open-sans-bold'
-  },
-  dataTable: {
-    height: Dimensions.get('window').height < 650 ? '70%' : '85%'
-  },
-  dataTableRows: {
-    height: '70%'
   },
   message: {
     textAlign: 'center'

@@ -136,7 +136,7 @@ const styles = StyleSheet.create({
   },
   cardHeader: {
     textAlign: 'center',
-    color: Colors['blue'].pale,
+    color: Colors.blue.dark,
     fontFamily: 'open-sans-bold'
   }
 })

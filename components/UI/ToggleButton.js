@@ -12,7 +12,7 @@ const CustomToggleButton = props => {
         {...props}
         accessibilityLabel={props.label}
         style={{...styles.button, ... props.style?.button}}
-        color={Platform.OS === "android" ? "black" : Colors["blue"].main}
+        color={Platform.OS === "android" ? "black" : Colors.blue.main}
       />
     </Surface>
   );

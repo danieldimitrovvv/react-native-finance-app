@@ -1,7 +1,9 @@
 import * as React from 'react'
 import { Dimensions, Text, View, StyleSheet } from 'react-native'
 
-import { Button, Surface, IconButton } from 'react-native-paper'
+import { Surface, IconButton } from 'react-native-paper'
+
+import Button from './UI/Button'
 
 import * as Permissions from 'expo-permissions'
 import { BarCodeScanner } from 'expo-barcode-scanner'
@@ -101,9 +103,8 @@ export default class ScannerQRCode extends React.Component {
               icon='refresh'
               mode='contained'
               onPress={() => this.setState({ scanned: false })}
-            >
-              Scan Again
-            </Button>
+              label='Scan Again'
+            />
           </View>
         )}
       </View>

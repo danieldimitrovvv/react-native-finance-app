@@ -14,25 +14,28 @@ import {
   DefaultTheme,
   Colors,
   Surface,
-  List
+  List,
+  DarkTheme
 } from "react-native-paper";
 import { Ionicons } from "@expo/vector-icons";
 
 import Card from "./components/UI/Card";
 import AppColors from "./constants/Colors";
 
-const theme = {
-  ...DefaultTheme,
-  dark: false,
-  roundness: 20,
-  mode: "exact",
-  colors: {
-    ...DefaultTheme.colors
-    // ...AppColors.orange.theme
-    // primary: "#3498db",
-    // accent: "#f1c40f"
-  }
-};
+// const theme = {
+//   ...DefaultTheme,
+//   dark: false,
+//   roundness: 20,
+//   mode: "exact",
+//   colors: {
+//     ...DefaultTheme.colors
+//     // ...AppColors.orange.theme
+//     // primary: "#3498db",
+//     // accent: "#f1c40f"
+//   }
+// };
+
+const theme = DarkTheme
 
 export default function Main() {
   return (

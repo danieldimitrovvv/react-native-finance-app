@@ -1,17 +1,19 @@
 import * as React from 'react'
-import { Text, View, StyleSheet, Dimensions, ScrollView } from 'react-native'
+import { View, StyleSheet, ScrollView } from 'react-native'
 import {
   Avatar,
-  Button,
   Card,
   Title,
   Paragraph,
   Caption,
-  IconButton,
-  Snackbar
+  // Button
 } from 'react-native-paper'
+
 import { Ionicons } from '@expo/vector-icons'
+
 import Colors from '../../constants/Colors'
+
+import Button from './Button'
 
 const card = props => {
   return (
@@ -86,7 +88,7 @@ const LeftHeaderComponent = props => {
         size={props?.icon?.size ? props.icon.size : 25}
         style={{
           ...(props?.icon?.style ? props.icon.style : {}),
-          backgroundColor: Colors['blue'].main
+          backgroundColor: Colors.blue.main
         }}
       />
     ) : props?.avatar?.type == 'text' ? (
@@ -95,14 +97,14 @@ const LeftHeaderComponent = props => {
         size={props?.icon?.size ? props.icon.size : 25}
         style={{
           ...(props?.icon?.style ? props.icon.style : {}),
-          backgroundColor: Colors['blue'].main
+          backgroundColor: Colors.blue.main
         }}
         label={props.avatar.label ? props.avatar.label : ''}
       />
     ) : props.icon ? (
       <Ionicons
         name={props?.icon?.name ? props.icon.name : 'ios-card'}
-        color={props?.icon?.color ? props.icon.color : Colors['blue'].main}
+        color={props?.icon?.color ? props.icon.color : Colors.blue.main}
         size={props?.icon?.size ? props.icon.size : 25}
         style={{
           ...(props?.icon?.style ? props.icon.style : {}),

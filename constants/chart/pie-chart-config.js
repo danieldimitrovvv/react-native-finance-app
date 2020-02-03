@@ -1,43 +1,43 @@
-import Colors from "../Colors";
-import ColorRest from "../../rests/ColorRest";
+import Colors, { getColorsTheme, THEME_TYPES } from '../Colors'
+import ColorRest from '../../rests/ColorRest'
 
-const legendFontSize = 10;
-const legendFontColor = "#FFF";
-const names = ["Seoul", "Toronto", "Beijing", "New York", "Moscow"];
+const legendFontSize = 10
+const legendFontColor = '#000'
+const names = ['Seoul', 'Toronto', 'Beijing', 'New York', 'Moscow']
 
-const randomColor = (theme = "red") =>
+const randomColor = (theme = THEME_TYPES.RED) =>
   (
-    "#" +
+    '#' +
     ((Math.random() * 0xffffff) << 0).toString(16) +
-    Colors[theme].pale.slice(1)
-  ).slice(0, 7);
+    getColorsTheme(them).pale.slice(1)
+  ).slice(0, 7)
 
-function getPopulation() {
-  return Math.round(Math.random() * 10000000) / 100;
+function getPopulation () {
+  return Math.round(Math.random() * 10000000) / 100
 }
 
 // async function getTheme() {
 //   return await ColorRest.getTheme();
 // }
 
-function getTheme() {
-  return "blue";
+function getTheme () {
+  return THEME_TYPES.BLUE
 }
 
-function getData() {
-  theme = getTheme();
-  const data = [];
+function getData () {
+  theme = getTheme()
+  const data = []
   names.forEach((name, index) => {
     data.push({
       name: name,
       population: getPopulation(),
-      color: Colors[theme].range[index % Colors[theme].range.length],
+      color: getColorsTheme(theme).range[index % getColorsTheme(theme).range.length],
       // color: randomColor(),
       legendFontColor: legendFontColor,
       legendFontSize: legendFontSize
-    });
-  });
-  return data;
+    })
+  })
+  return data
 }
 
-export default getData();
+export default getData()

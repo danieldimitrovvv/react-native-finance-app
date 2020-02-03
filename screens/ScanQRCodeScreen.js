@@ -1,6 +1,6 @@
 import React from 'react'
 import { StyleSheet, View } from 'react-native'
-import { Provider, Surface, Text } from 'react-native-paper'
+import { Provider, Surface, Text, Title } from 'react-native-paper'
 
 import { HeaderButtons, Item } from 'react-navigation-header-buttons'
 
@@ -10,7 +10,8 @@ import Dialog from '../components/UI/Dialog'
 import RadioButtonList from '../components/UI/RadioButtonList'
 
 import ColorRest from '../rests/ColorRest'
-import UserRest from '../rests/UserRest'
+import AccountRest from '../rests/AccountRest'
+
 import CategoryRest from '../rests/CategoryRest'
 
 export default class ScanQRCodeScreen extends React.Component {
@@ -19,7 +20,7 @@ export default class ScanQRCodeScreen extends React.Component {
     this.state = {
       theme: 'blue',
       isLoading: false,
-      dialog: {
+      addScanSumDialog: {
         visible: false,
         message: null,
         title: null,
@@ -30,7 +31,9 @@ export default class ScanQRCodeScreen extends React.Component {
         }
       },
       userCategories: [],
+      userAccounts: [],
       selectedCategoryID: null,
+      selectedAccountID: null,
       scanData: {
         date: null,
         time: null,
@@ -47,33 +50,36 @@ export default class ScanQRCodeScreen extends React.Component {
   }
 
   _hideDialog = () =>
-    this.setState(state => ({ dialog: { ...state.dialog, visible: false } }))
+    this.setState(state => ({ addScanSumDialog: { ...state.addScanSumDialog, visible: false } }))
 
   _addSumToCategory = () => {
     const categoryId = this.state.selectedCategoryID
-    console.log(categoryId)
+    // Account subtraction
     CategoryRest.addSum(categoryId, this.state.scanData.sum).then(
       updateCategory => {
         const updateCategories = this.state.userCategories
         updateCategories[categoryId] = updateCategory
         this.setState({ userCategories: updateCategories })
         this._hideDialog()
-        console.log(this.state.userCategories)
       }
     )
   }
 
   _submitCardHandler = (date, time, sum) => {
-    this.setState({ scanData: { date, time, sum: +sum } })
+    this.setState({ isLoading: true, scanData: { date, time, sum: +sum } })
     CategoryRest.getCategories().then(categories => {
-      this.setState(state => ({
-        dialog: {
-          ...state.dialog,
-          title: sum,
-          visible: true
-        },
-        userCategories: categories
-      }))
+      AccountRest.getAccounts().then(accounts => {
+        this.setState(state => ({
+          isLoading: false,
+          addScanSumDialog: {
+            ...state.addScanSumDialog,
+            title: sum,
+            visible: true
+          },
+          userAccounts: accounts,
+          userCategories: categories
+        }))
+      })
     })
   }
 
@@ -83,25 +89,52 @@ export default class ScanQRCodeScreen extends React.Component {
   _mapCategoriesToRadioButtonData = () =>
     this.state.userCategories.map(cat => ({ title: cat.name, value: cat.id }))
 
+  _changeSelectAccountHandler = value =>
+    this.setState({ selectedAccountID: value })
+
+  _mapAccountsToRadioButtonData = () =>
+    this.state.userAccounts.map(account => ({
+      title: account.name,
+      value: account.id
+    }))
+
   render () {
     return (
       <Provider>
         <Surface style={styles.scannerContainer}>
-          <Dialog {...this.state.dialog}>
-            <RadioButtonList
-              data={this._mapCategoriesToRadioButtonData()}
-              onValueChange={this._changeSelectCategoryHandler}
-            />
-          </Dialog>
+          {this._renderAddSumDialog()}
           <ScannerQRCode
             resultCard={{
-              title: 'added to category',
+              title: 'Added to category',
               icon: 'plus',
               onPress: this._submitCardHandler
             }}
           />
         </Surface>
       </Provider>
+    )
+  }
+
+  _renderAddSumDialog = () => {
+    return (
+      <Dialog {...this.state.addScanSumDialog}>
+        {/* <ScrollView> */}
+        <View>
+          <Title>Select Category</Title>
+          <RadioButtonList
+            data={this._mapCategoriesToRadioButtonData()}
+            onValueChange={this._changeSelectCategoryHandler}
+          />
+        </View>
+        <View>
+          <Title>Select Account</Title>
+          <RadioButtonList
+            data={this._mapAccountsToRadioButtonData()}
+            onValueChange={this._changeSelectAccountHandler}
+          />
+        </View>
+        {/* </ScrollView> */}
+      </Dialog>
     )
   }
 }

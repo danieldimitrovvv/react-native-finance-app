@@ -18,9 +18,6 @@ export default class AccountsScreen extends React.Component {
   static navigationOptions = navData => {
     return {
       headerTitle: 'Accounts',
-      headerStyle: {
-        backgroundColor: Platform.OS === 'android' ? Colors['blue'].dark : ''
-      },
       headerLeft: () => (
         <HeaderButtons HeaderButtonComponent={HeaderButton}>
           <Item

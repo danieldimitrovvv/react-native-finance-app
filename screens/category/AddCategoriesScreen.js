@@ -15,9 +15,6 @@ export default class AddCategoriesScreen extends React.Component {
   static navigationOptions = navData => {
     return {
       headerTitle: 'Categories',
-      headerStyle: {
-        backgroundColor: Platform.OS === 'android' ? Colors.blue.pale : ''
-      },
       headerRight: () => (
         <HeaderButtons HeaderButtonComponent={HeaderButton}>
           <Item

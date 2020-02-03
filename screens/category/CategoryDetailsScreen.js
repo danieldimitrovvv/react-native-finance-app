@@ -6,8 +6,7 @@ import {
   Platform,
   Dimensions
 } from 'react-native'
-import { Provider, Title, Text, DataTable } from 'react-native-paper'
-import { Ionicons } from '@expo/vector-icons'
+import { Provider, Title, Text } from 'react-native-paper'
 
 import Colors from '../../constants/Colors'
 
@@ -15,18 +14,18 @@ import ActivityIndicator from '../../components/UI/ActivityIndicator'
 import Dialog from '../../components/UI/Dialog'
 import Card from '../../components/UI/Card'
 import Input from '../../components/UI/Input'
+import RadioButtonList from '../../components/UI/RadioButtonList'
 
 import CategoryRest from '../../rests/CategoryRest'
 import TransactionRest from '../../rests/TransactionRest'
-import formatDate from '../../components/FormatDate'
+import AccountRest from '../../rests/AccountRest'
+
+import TransactionsDataTable from '../../components/dataTables/TransactionsDataTable'
 
 export default class CategoryDetailsScreen extends React.Component {
   static navigationOptions = navData => {
     return {
-      headerTitle: navData.navigation.getParam('categoryTitle'),
-      headerStyle: {
-        backgroundColor: Platform.OS === 'android' ? Colors['blue'].dark : ''
-      }
+      headerTitle: navData.navigation.getParam('categoryTitle')
     }
   }
 
@@ -47,7 +46,6 @@ export default class CategoryDetailsScreen extends React.Component {
       transactions: null,
       addSumDialog: {
         visible: false,
-        message: null,
         title: null,
         onDismiss: this._hideAddSumDialog,
         buttons: {
@@ -61,6 +59,8 @@ export default class CategoryDetailsScreen extends React.Component {
           cancel: { onPress: this._hideAddSumDialog, label: 'cancel' }
         }
       },
+      userAccounts: [],
+      selectedAccountID: null,
       addSum: {
         value: null,
         isValid: false
@@ -107,6 +107,15 @@ export default class CategoryDetailsScreen extends React.Component {
     })
   }
 
+  _getUserAccounts = () => {
+    AccountRest.getAccounts().then(accounts => {
+      this.setState(state => ({
+        isLoading: false,
+        userAccounts: accounts
+      }))
+    })
+  }
+
   _hideDialog = () =>
     this.setState(state => ({ dialog: { ...state.dialog, visible: false } }))
 
@@ -144,8 +153,21 @@ export default class CategoryDetailsScreen extends React.Component {
         ...state.addSumDialog,
         buttons: {
           ...state.addSumDialog.buttons,
-          ok: { ...state.addSumDialog.buttons.ok, disabled: !inputValidity }
+          ok: {
+            ...state.addSumDialog.buttons.ok,
+            disabled: !inputValidity || !state.selectedAccountID
+          }
         }
+      }
+    }))
+  }
+
+  _openAddSumDialogHandler = () => {
+    this._getUserAccounts()
+    this.setState(state => ({
+      addSumDialog: {
+        ...state.addSumDialog,
+        visible: true
       }
     }))
   }
@@ -153,6 +175,7 @@ export default class CategoryDetailsScreen extends React.Component {
   _addSum = () => {
     this._changeAddSumDialogOkBtnLoading(true)
 
+    // Account subtraction sum
     CategoryRest.addSum(this.state.categoryId, this.state.addSum.value).then(
       _ => {
         this._changeAddSumDialogOkBtnLoading(false)
@@ -160,6 +183,15 @@ export default class CategoryDetailsScreen extends React.Component {
       }
     )
   }
+
+  _changeSelectAccountHandler = value =>
+    this.setState({ selectedAccountID: value })
+
+  _mapAccountsToRadioButtonData = () =>
+    this.state.userAccounts.map(account => ({
+      title: account.name,
+      value: account.id
+    }))
 
   render () {
     return (
@@ -193,6 +225,13 @@ export default class CategoryDetailsScreen extends React.Component {
           onInputChange={this.inputChangeHandler}
           initialValue=''
         />
+        <View>
+          <Title>Select Account</Title>
+          <RadioButtonList
+            data={this._mapAccountsToRadioButtonData()}
+            onValueChange={this._changeSelectAccountHandler}
+          />
+        </View>
       </Dialog>
     )
   }
@@ -227,13 +266,7 @@ export default class CategoryDetailsScreen extends React.Component {
             icon: 'plus',
             mode: 'contained',
             loading: this.state.addSumDialog.buttons.ok.loading,
-            onPress: () =>
-              this.setState(state => ({
-                addSumDialog: {
-                  ...state.addSumDialog,
-                  visible: true
-                }
-              }))
+            onPress: this._openAddSumDialogHandler
           }
         }}
       >
@@ -260,61 +293,14 @@ export default class CategoryDetailsScreen extends React.Component {
     let Element = !transactions ? (
       <Title style={styles.message}>Not Added transactions yet!</Title>
     ) : (
-      <DataTable style={styles.dataTable}>
-        <DataTable.Header>
-          <DataTable.Title>Date</DataTable.Title>
-          <DataTable.Title>$</DataTable.Title>
-          <DataTable.Title numeric></DataTable.Title>
-        </DataTable.Header>
-        <ScrollView style={styles.dataTableRows}>
-          {transactions.map(t => (
-            <DataTable.Row>
-              <DataTable.Cell>
-                <Text>{formatDate(t.dateOfCompletion)}</Text>
-              </DataTable.Cell>
-              <DataTable.Cell>{t.sum}</DataTable.Cell>
-              <DataTable.Cell numeric>
-                {this._renderTransferTypeIcon(t.type)}
-              </DataTable.Cell>
-            </DataTable.Row>
-          ))}
-        </ScrollView>
-        {this.state.transactionPagination.numberOfPages > 1 && (
-          <DataTable.Pagination
-            page={this.state.transactionPagination.page}
-            numberOfPages={this.state.transactionPagination.numberOfPages}
-            onPageChange={this._changeTransactionsPage}
-            label={
-              this.state.transactionPagination.page +
-              1 +
-              ' of ' +
-              this.state.transactionPagination.numberOfPages
-            }
-          />
-        )}
-      </DataTable>
+      <TransactionsDataTable
+        transactions={transactions}
+        transactionPagination={this.state.transactionPagination}
+        changeTransactionsPage={this._changeTransactionsPage}
+      />
     )
 
     return Element
-  }
-
-  _renderTransferTypeIcon = type => {
-    //income expense transfer
-    let name = null
-    let color = 'black'
-
-    if (type === 'income') {
-      name = Platform.OS === 'android' ? 'md-arrow-up' : 'ios-arrow-up'
-      color = Colors.blue.main
-    } else if (type === 'expense') {
-      name = Platform.OS === 'android' ? 'md-arrow-down' : 'ios-arrow-down'
-
-      color = Colors.red.main
-    } else {
-      name = Platform.OS === 'android' ? 'md-sync' : 'ios-sync'
-      color = Colors.blue.dark
-    }
-    return <Ionicons name={name} size={25} color={color} />
   }
 }
 
@@ -322,6 +308,7 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     width: '100%',
+    height: '100%',
     justifyContent: 'center',
     alignItems: 'center'
   },
@@ -333,12 +320,6 @@ const styles = StyleSheet.create({
     paddingHorizontal: 15,
     fontSize: 26,
     fontFamily: 'open-sans-bold'
-  },
-  dataTable: {
-    height: Dimensions.get('window').height < 650 ? '70%' : '85%'
-  },
-  dataTableRows: {
-    height: '70%'
   },
   message: {
     textAlign: 'center'

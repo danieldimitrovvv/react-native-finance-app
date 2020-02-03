@@ -1,6 +1,7 @@
 import * as React from 'react'
 import { StyleSheet, ScrollView } from 'react-native'
-import { Portal, Dialog, Button, Paragraph } from 'react-native-paper'
+import { Portal, Dialog, Paragraph } from 'react-native-paper'
+import Button from './Button'
 
 const dialog = props => {
   return (

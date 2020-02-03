@@ -11,11 +11,11 @@ import DataContributionGraphChart from "../constants/chart/contribution-graph-ch
 import DataProgressChart from "../constants/chart/progress-chart-config";
 import HeaderButton from "../components/UI/HeaderButton";
 
-import Colors from "../constants/Colors";
+import Colors, {getColorsTheme, THEME_TYPES} from "../constants/Colors";
 
 import ColorRest from "../rests/ColorRest";
 
-const getChart = (type, theme = "orange", key) => {
+const getChart = (type, theme = THEME_TYPES.ORANGE, key) => {
   switch (type) {
     case "line-bazier":
       return (
@@ -37,8 +37,8 @@ const getChart = (type, theme = "orange", key) => {
           chartType={chartTypes.pie}
           data={DataPieChart}
           accessor="population"
-          // backgroundColor='transparent'
-          backgroundColor={Colors[theme].main}
+          backgroundColor='transparent'
+          // backgroundColor={getColorsTheme(theme).main}
           paddingLeft="15"
           absolute
           theme={theme}
@@ -115,8 +115,8 @@ export default function StatisticsScreen() {
     "line-bazier",
     "pie",
     "progress",
-    "bar",
     "stackedBar",
+    "bar",
     "contributionGraph"
   ];
   const [theme, setTheme] = useState("blue");
@@ -125,7 +125,7 @@ export default function StatisticsScreen() {
 
   return (
     <ScrollView
-      style={{ ...styles.container, backgroundColor: Colors[theme].dark }}
+      style={{ ...styles.container }}
     >
       {typesChart.map((chartType, index) => getChart(chartType, theme, index))}
     </ScrollView>
@@ -152,7 +152,7 @@ StatisticsScreen.navigationOptions = navData => {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    // backgroundColor: Colors[theme].dark,
+    // backgroundColor: getColorsTheme(theme).dark,
     paddingVertical: 30
   },
   controlContainer: {
