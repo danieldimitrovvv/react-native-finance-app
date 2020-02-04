@@ -11,8 +11,8 @@ import Colors from '../../constants/Colors'
 import AccountRest from '../../rests/AccountRest'
 
 export default class AccountForm extends React.Component {
-  constructor(props) {
-    console.log(props.navigation);
+  constructor (props) {
+    console.log(props.navigation)
     super(props)
     this.state = {
       name: {
@@ -99,12 +99,20 @@ export default class AccountForm extends React.Component {
               onInputChange={this.inputChangeHandler}
               initialValue=''
             />
-
             <Input
               id='availability'
               label='Availability'
               keyboardType='default'
               required
+              autoCapitalize='none'
+              errorText='Please enter a valid availability.'
+              onInputChange={this.inputChangeHandler}
+              initialValue=''
+            />
+            <Input
+              id='purpose'
+              label='Purpose'
+              keyboardType='decimal-pad'
               autoCapitalize='none'
               errorText='Please enter a valid availability.'
               onInputChange={this.inputChangeHandler}
@@ -121,7 +129,7 @@ export default class AccountForm extends React.Component {
 const styles = StyleSheet.create({
   screen: {
     flex: 1,
-    width:'100%'
+    width: '100%'
   },
   container: {
     paddingHorizontal: 15,

@@ -1,7 +1,7 @@
 import React, { useReducer, useEffect } from 'react'
-import { View, Text, TextInput, StyleSheet } from 'react-native'
-import Colors from '../../constants/Colors'
+import { View, TextInput, StyleSheet } from 'react-native'
 import ErrorText from './ErrorText'
+import InputLabel from './InputLabel'
 
 const INPUT_CHANGE = 'INPUT_CHANGE'
 const INPUT_BLUR = 'INPUT_BLUR'
@@ -41,7 +41,7 @@ const Input = props => {
 
   const textChangeHandler = text => {
     const emailRegex = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/
-    // const passwordRegex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/;
+    const passwordRegex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&]){8,}$/
     let isValid = true
     if (props.required && text.trim().length === 0) {
       isValid = false
@@ -74,10 +74,7 @@ const Input = props => {
 
   return (
     <View style={{ ...styles.formControl, ...props.styles?.formControl }}>
-      <Text style={{ ...styles.label, ...props.styles?.label }}>
-        {props.label}
-        {props.required ? <Text style={{ ...styles.required }}> *</Text> : null}
-      </Text>
+      <InputLabel label={props.label} required={props.required} />
       <TextInput
         {...props}
         style={{ ...styles.input, ...props.styles?.input }}
@@ -99,19 +96,12 @@ const styles = StyleSheet.create({
     paddingHorizontal: 20,
     marginVertical: 12
   },
-  label: {
-    fontFamily: 'open-sans-bold',
-    marginVertical: 8
-  },
   input: {
     paddingHorizontal: 2,
     paddingVertical: 5,
     borderBottomColor: '#ccc',
     borderBottomWidth: 1
   },
-  required: {
-    color: 'red'
-  }
 })
 
 export default Input

@@ -1,21 +1,19 @@
 import React, { useState } from 'react'
 import { StyleSheet, Text, View, Dimensions } from 'react-native'
-import { RadioButton } from 'react-native-paper'
+import { RadioButton, Surface } from 'react-native-paper'
+import InputLabel from './InputLabel'
 
 const RadioButtonList = props => {
   const [value, setValue] = useState(null)
   return (
-    <RadioButton.Group
-      onValueChange={value => {
-        setValue(value)
-        props.onValueChange(value)
-      }}
-      value={value}
-    >
-      {props.data.map((item, index) =>
-        RadioButtonListItem({ ...item, key: index })
-      )}
-    </RadioButton.Group>
+    <Surface style={{ ...styles.container, ...props.styles?.container }}>
+      <InputLabel label={props.label} required={props.required}></InputLabel>
+      <RadioButton.Group onValueChange={props.onValueChange} value={props.value}>
+        {props.data.map((item, index) =>
+          RadioButtonListItem({ ...item, key: index })
+        )}
+      </RadioButton.Group>
+    </Surface>
   )
 }
 
@@ -23,7 +21,7 @@ const RadioButtonListItem = props => {
   return (
     <View
       key={props.key}
-      style={{ ...styles.container, ...props.styles?.container }}
+      style={{ ...styles.itemContainer, ...props.styles?.itemContainer }}
     >
       <Text style={{ ...styles.title, ...props.styles?.title }}>
         {props.title}
@@ -35,6 +33,9 @@ const RadioButtonListItem = props => {
 
 const styles = StyleSheet.create({
   container: {
+    flexDirection: 'column'
+  },
+  itemContainer: {
     flex: 1,
     flexDirection: 'row',
     paddingVertical: 8,

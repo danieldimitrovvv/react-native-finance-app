@@ -4,13 +4,14 @@ import { StyleSheet, KeyboardAvoidingView, View } from 'react-native'
 import Card from '../UI/Card'
 import Input from '../UI/Input'
 import Dialog from '../UI/Dialog'
+import  Button  from '../UI/Button'
 
 import AuthRest from '../../rests/AuthRest'
 
 import Colors from '../../constants/Colors'
 
 export default class LoginForm extends React.Component {
-  constructor(props) {
+  constructor (props) {
     super(props)
     this.state = {
       email: {
@@ -117,6 +118,11 @@ export default class LoginForm extends React.Component {
               errorText='Please enter a valid password.'
               onInputChange={this.inputChangeHandler}
               initialValue='12'
+            />
+            <Button
+              icon='registered-trademark'
+              label='Signup'
+              onPress={this.props.changeFormHandler}
             />
           </Card>
         </KeyboardAvoidingView>

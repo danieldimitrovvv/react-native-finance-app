@@ -1,15 +1,14 @@
 import * as React from 'react'
-import {
-  StyleSheet,
-  KeyboardAvoidingView,
-  ScrollView,
-  Dimensions
-} from 'react-native'
+import { StyleSheet, KeyboardAvoidingView, ScrollView } from 'react-native'
+
 import Card from '../UI/Card'
 import Input from '../UI/Input'
 import CustomToggleButton from '../UI/ToggleButton'
 import ToggleButtonGroup from '../UI/ToggleButtonGroup'
 import Dialog from '../UI/Dialog'
+import Picker from '../UI/Picker'
+import Button from '../UI/Button'
+
 import Colors from '../../constants/Colors'
 
 import UserRest from '../../rests/UserRest'
@@ -75,7 +74,7 @@ export default class RegisterForm extends React.Component {
   _hideDialog = () =>
     this.setState(state => ({ dialog: { ...state.dialog, visible: false } }))
 
-  submit = () => {
+  onSubmit = () => {
     this.setState({ isLoading: true })
     UserRest.registerUser(
       this.state.email.value,
@@ -87,7 +86,6 @@ export default class RegisterForm extends React.Component {
     )
       .then(userId => {
         this.setState({ isLoading: false })
-        // this.props.navigation.navigate('Auth')
         this.props.changeFormHandler()
       })
       .catch(error => {
@@ -102,6 +100,13 @@ export default class RegisterForm extends React.Component {
         }))
       })
   }
+
+  _changeFamilyStatusHandler = familyStatus => {
+    this.setState({
+      familyStatus: { value: familyStatus, isValid: true }
+    })
+  }
+
   render () {
     return (
       <KeyboardAvoidingView
@@ -122,7 +127,7 @@ export default class RegisterForm extends React.Component {
                 icon: 'registered-trademark',
                 mode: 'contained',
                 loading: this.state.isLoading,
-                onPress: this.submit,
+                onPress: this.onSubmit,
                 disabled: !this.state.formIsValid,
                 label: 'Signup'
               }
@@ -149,28 +154,6 @@ export default class RegisterForm extends React.Component {
               onInputChange={this.inputChangeHandler}
               initialValue=''
             />
-            <ToggleButtonGroup
-              onValueChange={value => this.setState({ gender: { value } })}
-              value={this.state.gender.value}
-              label='Gender'
-              type={Dimensions.get('window').width > 768 ? 'row' : 'column'}
-            >
-              <CustomToggleButton
-                icon='gender-male'
-                value='male'
-                label='Male'
-              />
-              <CustomToggleButton
-                icon='gender-female'
-                value='female'
-                label='Female'
-              />
-              <CustomToggleButton
-                icon='gender-male-female'
-                value='gender'
-                label='Gender'
-              />
-            </ToggleButtonGroup>
             <Input
               id='age'
               label='Age'
@@ -179,14 +162,8 @@ export default class RegisterForm extends React.Component {
               onInputChange={this.inputChangeHandler}
               initialValue=''
             />
-            <Input
-              id='familyStatus'
-              label='Family Status'
-              keyboardType='default'
-              errorText=''
-              onInputChange={this.inputChangeHandler}
-              initialValue=''
-            />
+            {this._renderGenderSection()}
+            {this._renderFamilyStatusSection()}
             <Input
               id='education'
               label='Education'
@@ -223,10 +200,58 @@ export default class RegisterForm extends React.Component {
               onInputChange={this.inputChangeHandler}
               initialValue=''
             />
+            <Button
+              icon='login'
+              label='Login'
+              onPress={this.props.changeFormHandler}
+            />
           </Card>
         </ScrollView>
         <Dialog {...this.state.dialog} />
       </KeyboardAvoidingView>
+    )
+  }
+
+  _renderGenderSection = () => {
+    return (
+      <ToggleButtonGroup
+        onValueChange={value => this.setState({ gender: { value } })}
+        value={this.state.gender.value}
+        label='Gender'
+        // type={Dimensions.get('window').width > 400 ? 'row' : 'column'}
+        type='row'
+      >
+        <CustomToggleButton icon='gender-male' value='male' label='Male' />
+        <CustomToggleButton
+          icon='gender-female'
+          value='female'
+          label='Female'
+        />
+        {/* <CustomToggleButton
+                icon='gender-male-female'
+                value='gender'
+                label='Gender'
+              /> */}
+      </ToggleButtonGroup>
+    )
+  }
+
+  _renderFamilyStatusSection = () => {
+    return (
+      <Picker
+        selectedValue={this.state.familyStatus.value}
+        onValueChange={this._changeFamilyStatusHandler}
+        label='Family Status'
+        styles={{
+          container: { paddingHorizontal: 15 }
+        }}
+        data={[
+          { label: 'Select Options', value: null },
+          { label: 'Single', value: 'single' },
+          { label: 'Is Complicated', value: 'isComplicated' },
+          { label: 'Married', value: 'married' }
+        ]}
+      />
     )
   }
 }

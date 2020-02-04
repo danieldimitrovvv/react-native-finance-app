@@ -1,7 +1,7 @@
 {
   "expo": {
-    "name": "My Finances",
-    "slug": "finance-app",
+    "name": "My Finances 2.0",
+    "slug": "finance-app-2-0",
     "privacy": "public",
     "sdkVersion": "35.0.0",
     "platforms": [
@@ -29,7 +29,8 @@
     "android": {
       "package": "com.ru.finance_app"
     },
-    "entryPoint": "node_modules/expo/AppEntry.js"
+    "entryPoint": "node_modules/expo/AppEntry.js",
+    "description": ""
   },
   "displayName": "My Finances",
   "name": "finance"

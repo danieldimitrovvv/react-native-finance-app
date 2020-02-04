@@ -50,7 +50,9 @@ export default class ScanQRCodeScreen extends React.Component {
   }
 
   _hideDialog = () =>
-    this.setState(state => ({ addScanSumDialog: { ...state.addScanSumDialog, visible: false } }))
+    this.setState(state => ({
+      addScanSumDialog: { ...state.addScanSumDialog, visible: false }
+    }))
 
   _addSumToCategory = () => {
     const categoryId = this.state.selectedCategoryID
@@ -120,15 +122,19 @@ export default class ScanQRCodeScreen extends React.Component {
       <Dialog {...this.state.addScanSumDialog}>
         {/* <ScrollView> */}
         <View>
-          <Title>Select Category</Title>
           <RadioButtonList
+            label='Select Category'
+            required
+            value={this.state.userCategories[0]?.id}
             data={this._mapCategoriesToRadioButtonData()}
             onValueChange={this._changeSelectCategoryHandler}
           />
         </View>
         <View>
-          <Title>Select Account</Title>
           <RadioButtonList
+            label='Select Account'
+            required
+            value={this.state.userAccounts[0]?.id}
             data={this._mapAccountsToRadioButtonData()}
             onValueChange={this._changeSelectAccountHandler}
           />

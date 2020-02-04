@@ -3,6 +3,7 @@ import { Platform, StyleSheet } from 'react-native'
 import { ToggleButton, Surface, Text } from 'react-native-paper'
 
 import Colors from '../../constants/Colors'
+import InputLabel from './InputLabel'
 
 const CustomToggleButtonGroup = props => {
   let Element =
@@ -31,9 +32,8 @@ const CustomToggleButtonGroup = props => {
         flexDirection: props.type === 'row' ? 'row' : 'column'
       }}
     >
-      <Text style={{ ...styles.label, ...props.styles?.label }}>
-        {props.label}
-      </Text>
+      <InputLabel label={props.label} required={props.required}/>
+
       {Element}
     </Surface>
   )
@@ -44,10 +44,6 @@ const styles = StyleSheet.create({
     marginHorizontal: 15,
     flexDirection: 'row',
     justifyContent: 'space-between'
-  },
-  label: {
-    fontFamily: 'open-sans-bold',
-    marginVertical: 8
   },
   button: {
     paddingHorizontal: 2,

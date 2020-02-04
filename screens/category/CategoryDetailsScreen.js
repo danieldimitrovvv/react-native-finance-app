@@ -218,7 +218,7 @@ export default class CategoryDetailsScreen extends React.Component {
         <Input
           id='addSum'
           label='Sum'
-          keyboardType='number-pad'
+          keyboardType='decimal-pad'
           required
           autoCapitalize='none'
           errorText='Please enter a valid sum.'
@@ -226,8 +226,10 @@ export default class CategoryDetailsScreen extends React.Component {
           initialValue=''
         />
         <View>
-          <Title>Select Account</Title>
           <RadioButtonList
+            label='Select Account'
+            required
+            value={this.state.userAccounts[0]?.id}
             data={this._mapAccountsToRadioButtonData()}
             onValueChange={this._changeSelectAccountHandler}
           />

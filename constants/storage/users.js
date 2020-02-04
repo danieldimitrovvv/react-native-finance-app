@@ -37,8 +37,8 @@ export default [
     '123',
     'Daniel Dimitrov',
     'male',
-    'single',
-    'Master',
+    null,
+    null,
     24
   )
 ]
