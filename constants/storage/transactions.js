@@ -1,9 +1,12 @@
-import Transaction from '../../models/Transaction'
+import Transaction, {
+  TRANSACTION_TYPES,
+  FROM_TO_TYPES,
+  PERIOD_TYPES
+} from '../../models/Transaction'
 import Users from './users'
 import Categories from './categories'
 import Accounts from './accounts'
 
-const PERIOD_TYPES = ['d', 'w', 'm', 'y']
 const numberTransactions = 1000
 
 const seedTransactions = () => {
@@ -48,29 +51,44 @@ const seedTransactions = () => {
 const getId = () => (new Date().getTime() + getNumberBetween(100, 10000)) / 13
 
 const getTransactionFromToData = () => {
-  const fromElement = getRandomArrayElement(Accounts)
+  const [fromElement, fromType] = getTransactionSideData()
   const fromId = fromElement.id
-  const fromType = 'account'
-  let toElement
-  const typeTransaction = getNumberBetween(0, 1)
 
-  if (typeTransaction === 0) {
-    toElement = getRandomArrayElement(Accounts)
-    toType = 'account'
-    type = 'transfer'
-  } else {
-    toElement = getRandomArrayElement(Categories)
-    toType = 'category'
-    type = 'expense'
-  }
+  const [toElement, toType] = getTransactionSideData()
   const toId = toElement.id
+
+  const type = getTransactionType(fromType, toType)
+
   const description = fromElement.name + ' --> ' + toElement.name + ' : ' + type
 
-  // frommType: account
-  // toType: account or category
-  // type: income expense transfer
-
   return [fromId, toId, fromType, toType, type, description]
+}
+
+const getTransactionSideData = () => {
+  const transactionType = getNumberBetween(0, 1)
+  let element
+  let elementType
+  if (transactionType === 0) {
+    element = getRandomArrayElement(Accounts)
+    elementType = FROM_TO_TYPES.ACCOUNT
+  } else {
+    element = getRandomArrayElement(Categories)
+    elementType = FROM_TO_TYPES.CATEGORY
+  }
+
+  return [element, elementType]
+}
+
+const getTransactionType = (fromType, toType) => {
+  if (fromType == FROM_TO_TYPES.ACCOUNT && toType == FROM_TO_TYPES.ACCOUNT) {
+    return TRANSACTION_TYPES.TRANSFER
+  }
+
+  if (fromType == FROM_TO_TYPES.ACCOUNT && toType == FROM_TO_TYPES.CATEGORY) {
+    return TRANSACTION_TYPES.EXPENSE
+  }
+
+  return TRANSACTION_TYPES.REVENUE
 }
 
 const getRecurringData = () => {

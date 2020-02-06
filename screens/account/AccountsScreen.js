@@ -13,6 +13,7 @@ import Dialog from '../../components/UI/Dialog'
 import Card from '../../components/UI/Card'
 
 import AccountRest from '../../rests/AccountRest'
+import { ACCOUNT_TYPES } from '../../models/Account'
 
 export default class AccountsScreen extends React.Component {
   static navigationOptions = navData => {
@@ -101,7 +102,7 @@ export default class AccountsScreen extends React.Component {
   }
 
   _renderAccountCard = account => {
-    return account.type !== 'deleted' ? (
+    return account.type !== ACCOUNT_TYPES.DELETED ? (
       <Card
         key={account.id}
         card={{
@@ -117,7 +118,7 @@ export default class AccountsScreen extends React.Component {
           subtitle: account.type,
           subtitleStyle: {
             color:
-              account.type === 'activated' ? Colors.blue.main : Colors.red.main
+              account.type === ACCOUNT_TYPES.ACTIVATED ? Colors.blue.main : Colors.red.main
           },
           leftContainer: {
             avatar: true,

@@ -17,6 +17,7 @@ import AccountRest from '../../rests/AccountRest'
 import TransactionRest from '../../rests/TransactionRest'
 import TransactionsDataTable from '../../components/dataTables/TransactionsDataTable'
 import UsersDataTable from '../../components/dataTables/UsersDataTable'
+import { ACCOUNT_TYPES } from '../../models/Account'
 
 
 export default class AccountDetailsScreen extends React.Component {
@@ -112,7 +113,7 @@ export default class AccountDetailsScreen extends React.Component {
   }
 
   _renderAccountCard = account => {
-    return account.type !== 'deleted' ? (
+    return account.type !== ACCOUNT_TYPES.DELETED ? (
       <Card
         key={account.id}
         card={{
@@ -123,7 +124,7 @@ export default class AccountDetailsScreen extends React.Component {
           subtitle: account.type,
           subtitleStyle: {
             color:
-              account.type === 'activated' ? Colors.blue.main : Colors.red.main
+              account.type === ACCOUNT_TYPES.ACTIVATED ? Colors.blue.main : Colors.red.main
           },
           leftContainer: {
             avatar: true,

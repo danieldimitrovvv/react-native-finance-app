@@ -21,6 +21,7 @@ import TransactionRest from '../../rests/TransactionRest'
 import AccountRest from '../../rests/AccountRest'
 
 import TransactionsDataTable from '../../components/dataTables/TransactionsDataTable'
+import { CATEGORY_TYPES } from '../../models/Category'
 
 export default class CategoryDetailsScreen extends React.Component {
   static navigationOptions = navData => {
@@ -240,7 +241,7 @@ export default class CategoryDetailsScreen extends React.Component {
 
   _renderCategoryCard = category => {
     const icon = this._getCardIconByType(category.type)
-    return category.type !== 'deleted' ? (
+    return  (
       <Card
         key={category.id}
         card={{
@@ -251,7 +252,7 @@ export default class CategoryDetailsScreen extends React.Component {
           subtitle: category.type,
           subtitleStyle: {
             color:
-              category.type === 'income' ? Colors.blue.main : Colors.red.main
+              category.type === CATEGORY_TYPES.REVENUE ? Colors.blue.main : Colors.red.main
           },
           leftContainer: {
             icon
@@ -274,8 +275,6 @@ export default class CategoryDetailsScreen extends React.Component {
       >
         {this._renderCategoryTransactionsTable()}
       </Card>
-    ) : (
-      <Title style={styles.message}>Not Added category yet!</Title>
     )
   }
 

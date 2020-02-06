@@ -2,9 +2,6 @@ import Users from '../constants/storage/users'
 import MainRest from './MainRest'
 
 class UserRest extends MainRest {
-  //income and expense
-  //activated, deactivated, deleted
-
   users = Users
 
   constructor () {

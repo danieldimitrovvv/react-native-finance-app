@@ -13,6 +13,7 @@ import CustomToggleButton from '../UI/ToggleButton'
 import CustomToggleButtonGroup from '../UI/ToggleButtonGroup'
 import ErrorText from '../UI/ErrorText'
 import InputLabel from '../UI/InputLabel'
+import { CATEGORY_TYPES } from '../../models/Category'
 
 export default class CategoryForm extends React.Component {
   constructor (props) {
@@ -137,7 +138,7 @@ export default class CategoryForm extends React.Component {
           initialValue=''
         />
         {this._renderCategoryTypeSection()}
-        {this.state.type.value === 'expense' && this._renderLimitSection()}
+        {this.state.type.value === CATEGORY_TYPES.EXPENSE && this._renderLimitSection()}
       </React.Fragment>
     )
   }
@@ -149,8 +150,8 @@ export default class CategoryForm extends React.Component {
         <Surface style={styles.typeRadioBtnContainer}>
           <RadioButtonList
             data={[
-              { title: 'Income', value: 'income' },
-              { title: 'Expense', value: 'expense' }
+              { title: 'Income', value: CATEGORY_TYPES.REVENUE },
+              { title: 'Expense', value: CATEGORY_TYPES.EXPENSE }
             ]}
             onValueChange={this._changeTypeHandler}
           />

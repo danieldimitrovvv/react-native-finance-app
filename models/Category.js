@@ -1,3 +1,11 @@
+const REVENUE = 'revenue'
+const EXPENSE = 'expense'
+
+const CATEGORY_TYPES = {
+  REVENUE,
+  EXPENSE
+}
+
 class Category {
   constructor (id, userId, name, type, sum, limit) {
     this.id = id
@@ -9,4 +17,5 @@ class Category {
   }
 }
 
+export { CATEGORY_TYPES }
 export default Category

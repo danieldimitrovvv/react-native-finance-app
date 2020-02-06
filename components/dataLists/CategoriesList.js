@@ -5,6 +5,7 @@ import { Text, Avatar } from 'react-native-paper'
 import List from '../UI/List'
 
 import Colors from '../../constants/Colors'
+import { CATEGORY_TYPES } from '../../models/Category'
 
 const CategoriesList = props => {
   return (
@@ -30,7 +31,7 @@ const mapCategories = (categories, navigation) => {
     description: (
       <Text
         style={{
-          color: category.type === 'income' ? Colors.blue.main : Colors.red.main
+          color: category.type === CATEGORY_TYPES.REVENUE ? Colors.blue.main : Colors.red.main
         }}
       >
         {category.type}

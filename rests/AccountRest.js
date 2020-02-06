@@ -4,9 +4,6 @@ import MainRest from './MainRest'
 import Account from '../models/Account'
 
 class AccountRest extends MainRest {
-  //income and expense
-  //activated, deactivated, deleted
-
   accounts = Accounts
 
   constructor () {

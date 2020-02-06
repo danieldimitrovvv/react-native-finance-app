@@ -1,3 +1,21 @@
+const REVENUE = 'revenue'
+const EXPENSE = 'expense'
+const TRANSFER = 'transfer'
+
+const ACCOUNT = 'account'
+const CATEGORY = 'category'
+
+const DAYS = 'd'
+const WEEKS = 'w'
+const MONTHS = 'm'
+const YEARS = 'y'
+
+const TRANSACTION_TYPES = { REVENUE, EXPENSE, TRANSFER }
+
+const FROM_TO_TYPES = { ACCOUNT, CATEGORY }
+
+const PERIOD_TYPES = { DAYS, WEEKS, MONTHS, YEARS }
+
 class Transaction {
   constructor (
     id,
@@ -28,5 +46,5 @@ class Transaction {
   }
 }
 
+export { TRANSACTION_TYPES, FROM_TO_TYPES, PERIOD_TYPES }
 export default Transaction
-
