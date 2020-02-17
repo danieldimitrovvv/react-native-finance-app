@@ -9,6 +9,8 @@ import  Button  from '../UI/Button'
 import AuthRest from '../../rests/AuthRest'
 
 import Colors from '../../constants/Colors'
+import i18n from '../../constants/configurations/config_languages'
+import { capitalizeFirst } from '../../utility/Capitalize'
 
 export default class LoginForm extends React.Component {
   constructor (props) {
@@ -27,7 +29,7 @@ export default class LoginForm extends React.Component {
         message: '',
         title: '',
         onDismiss: this._hideDialog,
-        buttons: { ok: { onPress: this._hideDialog, label: 'ok' } }
+        buttons: { ok: { onPress: this._hideDialog, label: i18n.t('ok') } }
       },
       formIsValid: false,
       isLoading: false
@@ -57,7 +59,7 @@ export default class LoginForm extends React.Component {
             ...state.dialog,
             visible: true,
             message: error,
-            title: 'ERROR'
+            title: i18n.t('error').toUpperCase()
           }
         }))
       })
@@ -72,7 +74,7 @@ export default class LoginForm extends React.Component {
         >
           <Card
             header={{
-              title: 'Login'.toUpperCase(),
+              title: i18n.t('login').toUpperCase(),
               titleStyle: styles.cardHeader
             }}
             style={{ ...styles.container, ...this.props?.style?.container }}
@@ -90,38 +92,38 @@ export default class LoginForm extends React.Component {
                 loading: this.state.isLoading,
                 onPress: this.submit,
                 disabled: !this.state.formIsValid,
-                label: 'login'
+                label: i18n.t('login')
               }
             }}
           >
             <Input
               id='email'
-              label='E-Mail'
+              label={capitalizeFirst(i18n.t('email'))}
               keyboardType='email-address'
               required
               email
               autoCapitalize='none'
-              errorText='Please enter a valid email address.'
+              errorText={i18n.t('please_enter_valid_email')}
               onInputChange={this.inputChangeHandler}
               initialValue='dan@abv.b'
             />
 
             <Input
               id='password'
-              label='Password'
+              label={capitalizeFirst(i18n.t('password'))}
               keyboardType='default'
               required
               password
               autoCapitalize='none'
               autoCompleteType='password'
               secureTextEntry={true}
-              errorText='Please enter a valid password.'
+              errorText={i18n.t('please_enter_valid_password')}
               onInputChange={this.inputChangeHandler}
               initialValue='12'
             />
             <Button
               icon='registered-trademark'
-              label='Signup'
+              label={capitalizeFirst(i18n.t('signup'))}
               onPress={this.props.changeFormHandler}
             />
           </Card>

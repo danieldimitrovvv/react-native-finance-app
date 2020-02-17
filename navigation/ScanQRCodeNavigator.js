@@ -4,8 +4,7 @@ import defaultStackNavOptions from '../constants/configurations/defaultStackNavO
 
 import ScanQRCodeScreen from '../screens/ScanQRCodeScreen'
 
-
-
+import i18n from '../constants/configurations/config_languages'
 
 const ScanQRCodeNavigator = createStackNavigator(
   {
@@ -13,7 +12,7 @@ const ScanQRCodeNavigator = createStackNavigator(
   },
   {
     navigationOptions: {
-      drawerLabel: 'Scan QR Code'
+      drawerLabel: i18n.t('scan_qr_code')
     },
     defaultNavigationOptions: defaultStackNavOptions
   }

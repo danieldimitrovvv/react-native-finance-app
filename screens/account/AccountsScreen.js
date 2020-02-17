@@ -15,14 +15,16 @@ import Card from '../../components/UI/Card'
 import AccountRest from '../../rests/AccountRest'
 import { ACCOUNT_TYPES } from '../../models/Account'
 
+import i18n from '../../constants/configurations/config_languages'
+
 export default class AccountsScreen extends React.Component {
   static navigationOptions = navData => {
     return {
-      headerTitle: 'Accounts',
+      headerTitle: i18n.t('accounts'),
       headerLeft: () => (
         <HeaderButtons HeaderButtonComponent={HeaderButton}>
           <Item
-            title='Menu'
+            title={i18n.t('menu')}
             iconName='ios-menu'
             onPress={() => {
               navData.navigation.toggleDrawer()
@@ -33,7 +35,7 @@ export default class AccountsScreen extends React.Component {
       headerRight: () => (
         <HeaderButtons HeaderButtonComponent={HeaderButton}>
           <Item
-            title='Add'
+            title={i18n.t('add')}
             iconName={Platform.OS === 'android' ? 'md-add' : 'ios-add'}
             onPress={() => {
               navData.navigation.navigate('AddAccount')
@@ -44,7 +46,7 @@ export default class AccountsScreen extends React.Component {
     }
   }
 
-  constructor (props) {
+  constructor(props) {
     super(props)
     this.state = {
       theme: 'blue',
@@ -88,7 +90,7 @@ export default class AccountsScreen extends React.Component {
           {this.state.isLoading ? (
             <ActivityIndicator />
           ) : this.state.accounts.length === 0 ? (
-            <Title>Not Added accounts yet!</Title>
+              <Title>{i18n.t('not_added_accounts_yet')}</Title>
           ) : (
             <ScrollView>
               {this.state.accounts.map(account =>

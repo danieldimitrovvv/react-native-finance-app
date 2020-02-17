@@ -12,6 +12,8 @@ import Button from '../UI/Button'
 import Colors from '../../constants/Colors'
 
 import UserRest from '../../rests/UserRest'
+import i18n from '../../constants/configurations/config_languages'
+import { capitalizeFirst, capitalizeAllFirst } from '../../utility/Capitalize'
 
 export default class RegisterForm extends React.Component {
   constructor (props) {
@@ -54,7 +56,7 @@ export default class RegisterForm extends React.Component {
         message: '',
         title: '',
         onDismiss: this._hideDialog,
-        buttons: { ok: { onPress: this._hideDialog, label: 'ok' } }
+        buttons: { ok: { onPress: this._hideDialog, label: i18n.t('ok') } }
       },
       formIsValid: false,
       isLoading: false
@@ -95,7 +97,7 @@ export default class RegisterForm extends React.Component {
             ...state.dialog,
             visible: true,
             message: error,
-            title: 'ERROR'
+            title: i18n.t('error').toUpperCase()
           }
         }))
       })
@@ -118,7 +120,7 @@ export default class RegisterForm extends React.Component {
           <Card
             style={{ ...styles.container, ...this.props?.style?.container }}
             header={{
-              title: 'Signup'.toUpperCase(),
+              title: i18n.t('signup').toUpperCase(),
               titleStyle: styles.cardHeader
             }}
             buttons={{
@@ -129,34 +131,34 @@ export default class RegisterForm extends React.Component {
                 loading: this.state.isLoading,
                 onPress: this.onSubmit,
                 disabled: !this.state.formIsValid,
-                label: 'Signup'
+                label: capitalizeFirst(i18n.t('signup'))
               }
             }}
           >
             <Input
               id='email'
-              label='E-Mail'
+              label={capitalizeFirst(i18n.t('email'))}
               keyboardType='email-address'
               required
               email
               autoCapitalize='none'
-              errorText='Please enter a valid email address.'
+              errorText={i18n.t('please_enter_valid_email')}
               onInputChange={this.inputChangeHandler}
               initialValue=''
             />
             <Input
               id='name'
-              label='Name'
+              label={capitalizeFirst(i18n.t('name'))}
               keyboardType='default'
               required
               autoCapitalize='none'
-              errorText='Please enter name.'
+              errorText={i18n.t('please_enter_name')}
               onInputChange={this.inputChangeHandler}
               initialValue=''
             />
             <Input
               id='age'
-              label='Age'
+              label={capitalizeFirst(i18n.t('age'))}
               keyboardType='numeric'
               errorText=''
               onInputChange={this.inputChangeHandler}
@@ -166,7 +168,7 @@ export default class RegisterForm extends React.Component {
             {this._renderFamilyStatusSection()}
             <Input
               id='education'
-              label='Education'
+              label={capitalizeFirst(i18n.t('education'))}
               keyboardType='default'
               errorText=''
               multiline={true}
@@ -176,33 +178,33 @@ export default class RegisterForm extends React.Component {
             />
             <Input
               id='password'
-              label='Password'
+              label={capitalizeFirst(i18n.t('password'))}
               keyboardType='default'
               required
               password
               autoCapitalize='none'
               autoCompleteType='password'
               secureTextEntry={true}
-              errorText='Please enter a valid password.'
+              errorText={i18n.t('please_enter_valid_password')}
               onInputChange={this.inputChangeHandler}
               initialValue=''
             />
             <Input
               id='confirmPassword'
-              label='Confirm Password'
+              label={capitalizeAllFirst(i18n.t('confirm_password'))}
               keyboardType='default'
               required
               password
               autoCapitalize='none'
               autoCompleteType='password'
               secureTextEntry={true}
-              errorText='Please enter a valid confirm password.'
+              errorText={i18n.t('please_enter_valid_confirm_password')}
               onInputChange={this.inputChangeHandler}
               initialValue=''
             />
             <Button
               icon='login'
-              label='Login'
+              label={capitalizeFirst(i18n.t('login'))}
               onPress={this.props.changeFormHandler}
             />
           </Card>
@@ -217,15 +219,19 @@ export default class RegisterForm extends React.Component {
       <ToggleButtonGroup
         onValueChange={value => this.setState({ gender: { value } })}
         value={this.state.gender.value}
-        label='Gender'
+        label={capitalizeFirst(i18n.t('gender'))}
         // type={Dimensions.get('window').width > 400 ? 'row' : 'column'}
         type='row'
       >
-        <CustomToggleButton icon='gender-male' value='male' label='Male' />
+        <CustomToggleButton
+          icon='gender-male'
+          value='male'
+          label={capitalizeFirst(i18n.t('male'))}
+        />
         <CustomToggleButton
           icon='gender-female'
           value='female'
-          label='Female'
+          label={capitalizeFirst(i18n.t('female'))}
         />
         {/* <CustomToggleButton
                 icon='gender-male-female'
@@ -241,15 +247,24 @@ export default class RegisterForm extends React.Component {
       <Picker
         selectedValue={this.state.familyStatus.value}
         onValueChange={this._changeFamilyStatusHandler}
-        label='Family Status'
+        // label={capitalizeAllFirst(i18n.t('family_status'))}
         styles={{
           container: { paddingHorizontal: 15 }
         }}
+        type='row'
         data={[
-          { label: 'Select Options', value: null },
-          { label: 'Single', value: 'single' },
-          { label: 'Is Complicated', value: 'isComplicated' },
-          { label: 'Married', value: 'married' }
+          { label: capitalizeAllFirst(i18n.t('family_status')), value: null },
+          { label: capitalizeFirst(i18n.t('single')), value: 'single' },
+          { label: capitalizeFirst(i18n.t('married')), value: 'married' },
+          {
+            label: capitalizeFirst(i18n.t('cohabitation')),
+            value: 'cohabitation'
+          },
+          {
+            label: capitalizeFirst(i18n.t('widow_or_widower')),
+            value: 'widow_or_widower'
+          },
+          { label: capitalizeFirst(i18n.t('other')), value: 'other' }
         ]}
       />
     )

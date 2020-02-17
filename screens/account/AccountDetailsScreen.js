@@ -19,6 +19,7 @@ import TransactionsDataTable from '../../components/dataTables/TransactionsDataT
 import UsersDataTable from '../../components/dataTables/UsersDataTable'
 import { ACCOUNT_TYPES } from '../../models/Account'
 
+import i18n from '../../constants/configurations/config_languages'
 
 export default class AccountDetailsScreen extends React.Component {
   static navigationOptions = navData => {
@@ -37,7 +38,7 @@ export default class AccountDetailsScreen extends React.Component {
         message: null,
         title: null,
         onDismiss: this._hideDialog,
-        buttons: { ok: { onPress: this._hideDialog, label: 'ok' } }
+        buttons: { ok: { onPress: this._hideDialog, label: i18n.t('ok') } }
       },
       accountId: null,
       account: null,
@@ -103,7 +104,7 @@ export default class AccountDetailsScreen extends React.Component {
           {this.state.isLoading ? (
             <ActivityIndicator />
           ) : !this.state.accountId ? (
-            <Title>Not Added account yet!</Title>
+              <Title>{i18n.t("not_existing_account")}</Title>
           ) : (
             this._renderAccountCard(this.state.account)
           )}
@@ -138,7 +139,6 @@ export default class AccountDetailsScreen extends React.Component {
         }}
         buttons={{
           ok: {
-            label: ' ',
             icon: 'account',
             mode: 'contained',
             disabled: this.state.show === 'u',
@@ -146,7 +146,6 @@ export default class AccountDetailsScreen extends React.Component {
             onPress: () => this.setState({ show: 'u' })
           },
           cancel: {
-            label: ' ',
             icon: 'bank-transfer',
             mode: 'contained',
             disabled: this.state.show === 't',
@@ -159,14 +158,14 @@ export default class AccountDetailsScreen extends React.Component {
           : this._renderAccountSharedUsersTable()}
       </Card>
     ) : (
-      <Title style={styles.message}>Not Existing account!</Title>
+        <Title style={styles.message}>{i18n.t('not_existing_account')}</Title>
     )
   }
 
   _renderAccountTransactionsTable = () => {
     const transactions = this.state.transactions
     const Element = !transactions ? (
-      <Title style={styles.message}>Not Added transactions yet!</Title>
+      <Title style={styles.message}>{i18n.t('not_added_transactions_yet')}</Title>
     ) : (
       <TransactionsDataTable
         transactions={transactions}
@@ -181,7 +180,7 @@ export default class AccountDetailsScreen extends React.Component {
   _renderAccountSharedUsersTable = () => {
     const sharedList = this.state.account.sharedList
     const Element = !sharedList ? (
-      <Title style={styles.message}>Not Added users yet!</Title>
+      <Title style={styles.message}>{i18n.t('not_added_users_yet')}</Title>
     ) : (
       <UsersDataTable users={sharedList} />
     )

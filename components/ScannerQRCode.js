@@ -10,6 +10,7 @@ import { BarCodeScanner } from 'expo-barcode-scanner'
 import Card from './UI/Card'
 
 import Dialog from './UI/Dialog'
+import i18n from '../constants/configurations/config_languages'
 
 export default class ScannerQRCode extends React.Component {
   constructor (props) {
@@ -60,8 +61,13 @@ export default class ScannerQRCode extends React.Component {
         dialog: {
           ...state.dialog,
           visible: true,
-          message: `Bar code with type ${type} and data ${data} has been scanned is not correct!`,
-          title: 'ERROR'
+          message:
+            i18n.t('bar_cod_type_and_data_is_not_correct') +
+            ' Type: ' +
+            type +
+            ' Data' +
+            data,
+          title: i18n.t('error').toUppercase()
         }
       }))
     }
@@ -79,10 +85,10 @@ export default class ScannerQRCode extends React.Component {
   render () {
     const { hasCameraPermission, scanned } = this.state
     if (hasCameraPermission === null) {
-      return <Text>Requesting for camera permission</Text>
+      return <Text>{i18n.t('requesting_for_camera_permission')}</Text>
     }
     if (hasCameraPermission === false) {
-      return <Text>No access to camera</Text>
+      return <Text>{i18n.t('no_access_to_camera')}</Text>
     }
     return (
       <View style={styles.container}>
@@ -103,7 +109,7 @@ export default class ScannerQRCode extends React.Component {
               icon='refresh'
               mode='contained'
               onPress={() => this.setState({ scanned: false })}
-              label='Scan Again'
+              label={i18n.t('scan_again')}
             />
           </View>
         )}
@@ -123,7 +129,7 @@ export default class ScannerQRCode extends React.Component {
       }}
       buttons={{
         ok: {
-          label: 'Add',
+          label: i18n.t('add'),
           mode: 'contained',
           icon: this.props.resultCard?.icon,
           onPress: this._add

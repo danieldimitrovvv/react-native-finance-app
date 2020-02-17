@@ -4,13 +4,15 @@ import defaultStackNavOptions from '../constants/configurations/defaultStackNavO
 
 import AuthScreen from '../screens/AuthScreen'
 
+import i18n from '../constants/configurations/config_languages'
+
 const AuthNavigator = createStackNavigator(
   {
     Auth: AuthScreen
   },
   {
     navigationOptions: {
-      drawerLabel: 'Logout'
+      drawerLabel: i18n.t('logout')
     },
     defaultNavigationOptions: defaultStackNavOptions
   }

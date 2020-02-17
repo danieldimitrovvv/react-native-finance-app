@@ -14,7 +14,9 @@ import CustomToggleButtonGroup from '../UI/ToggleButtonGroup'
 import ErrorText from '../UI/ErrorText'
 import InputLabel from '../UI/InputLabel'
 import { CATEGORY_TYPES } from '../../models/Category'
-
+import i18n from '../../constants/configurations/config_languages'
+import { capitalizeFirst } from '../../utility/Capitalize'
+  
 export default class CategoryForm extends React.Component {
   constructor (props) {
     super(props)
@@ -27,7 +29,7 @@ export default class CategoryForm extends React.Component {
         value: null,
         isValid: false,
         touch: false,
-        errorMessage: 'Please select a category type!!!'
+        errorMessage: i18n.t('please_select_category_type')
       },
       limit: {
         value: null,
@@ -39,7 +41,7 @@ export default class CategoryForm extends React.Component {
         message: '',
         title: '',
         onDismiss: this._hideDialog,
-        buttons: { ok: { onPress: this._hideDialog, label: 'ok' } }
+        buttons: { ok: { onPress: this._hideDialog, label: i18n.t('ok')} }
       },
       formIsValid: false,
       isLoading: false
@@ -79,7 +81,8 @@ export default class CategoryForm extends React.Component {
             ...state.dialog,
             visible: true,
             message: error,
-            title: 'ERROR'
+            title: i18n.t('error').toUpperCase()
+
           }
         }))
       })
@@ -103,7 +106,7 @@ export default class CategoryForm extends React.Component {
     return (
       <Card
         header={{
-          title: 'Category'.toUpperCase(),
+          title: i18n.t('category').toUpperCase(),
           titleStyle: styles.cardHeader
         }}
         style={{ ...styles.container, ...this.props?.style?.container }}
@@ -115,7 +118,7 @@ export default class CategoryForm extends React.Component {
             loading: this.state.isLoading,
             onPress: this.submit,
             disabled: !this.state.formIsValid,
-            label: 'Save'
+            label: capitalizeFirst(i18n.t('save'))
           }
         }}
       >
@@ -129,11 +132,11 @@ export default class CategoryForm extends React.Component {
       <React.Fragment>
         <Input
           id='name'
-          label='Name'
+          label={capitalizeFirst(i18n.t('name'))}
           keyboardType='default'
           required
           autoCapitalize='none'
-          errorText='Please enter a name.'
+          errorText={i18n.t('please_enter_name')}
           onInputChange={this.inputChangeHandler}
           initialValue=''
         />
@@ -146,14 +149,16 @@ export default class CategoryForm extends React.Component {
   _renderCategoryTypeSection = () => {
     return (
       <View style={styles.typeContainer}>
-        <InputLabel label='Type' required />
+        <InputLabel label={capitalizeFirst(i18n.t('type'))} required />
         <Surface style={styles.typeRadioBtnContainer}>
           <RadioButtonList
             data={[
-              { title: 'Income', value: CATEGORY_TYPES.REVENUE },
-              { title: 'Expense', value: CATEGORY_TYPES.EXPENSE }
+              { title: i18n.t('income'), value: CATEGORY_TYPES.REVENUE },
+              { title: i18n.t('expense'), value: CATEGORY_TYPES.EXPENSE }
             ]}
             onValueChange={this._changeTypeHandler}
+            styles={{ container: { flexDirection: 'row' } }}
+            value={this.state.type.value}
           />
         </Surface>
         {this.state.type.touch && !this.state.type.isValid && (
@@ -167,10 +172,10 @@ export default class CategoryForm extends React.Component {
       <React.Fragment>
         <Input
           id='limit'
-          label='Limit'
+          label={capitalizeFirst(i18n.t('limit'))}
           keyboardType='number-pad'
           autoCapitalize='none'
-          errorText='Please enter a valid limit.'
+          errorText={i18n.t('please_enter_valid_limit')}
           onInputChange={this.inputChangeHandler}
           initialValue=''
         />
@@ -188,8 +193,8 @@ export default class CategoryForm extends React.Component {
           }))
         }
         value={this.state.limit.type}
-        label='Limit in:'
-        type={'row'}
+        label={capitalizeFirst(i18n.t('limit_in')) + ':'}
+        type='row'
       >
         <CustomToggleButton icon='cash' value='cash' />
         <CustomToggleButton icon='percent' value='percent' />

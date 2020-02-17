@@ -6,6 +6,8 @@ import AccountsScreen from '../screens/account/AccountsScreen'
 import AddAccountsScreen from '../screens/account/AddAccountsScreen'
 import AccountDetailsScreen from '../screens/account/AccountDetailsScreen'
 
+import i18n from '../constants/configurations/config_languages'
+
 const AccountsNavigator = createStackNavigator(
   {
     Accounts: AccountsScreen,
@@ -14,7 +16,7 @@ const AccountsNavigator = createStackNavigator(
   },
   {
     navigationOptions: {
-      drawerLabel: 'Accounts'
+      drawerLabel: i18n.t('accounts')
     },
     defaultNavigationOptions: defaultStackNavOptions
   }

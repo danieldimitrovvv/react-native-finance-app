@@ -1,14 +1,16 @@
 import React from 'react'
 import { StyleSheet, ScrollView, Dimensions } from 'react-native'
-import { DataTable} from 'react-native-paper'
+import { DataTable } from 'react-native-paper'
+import i18n from '../../constants/configurations/config_languages'
+import { capitalizeFirst } from '../../utility/Capitalize'
 
 const UsersDataTable = props => {
   return (
     <DataTable style={styles.dataTable}>
       <DataTable.Header>
-        <DataTable.Title>Name</DataTable.Title>
-        <DataTable.Title>Email</DataTable.Title>
-        <DataTable.Title numeric>Years</DataTable.Title>
+        <DataTable.Title>{capitalizeFirst(i18n.t('name'))}</DataTable.Title>
+        <DataTable.Title>{capitalizeFirst(i18n.t('email'))}</DataTable.Title>
+        <DataTable.Title numeric>{capitalizeFirst(i18n.t('age'))}</DataTable.Title>
       </DataTable.Header>
       <ScrollView style={styles.dataTableRows}>
         {props.users.map(u => (

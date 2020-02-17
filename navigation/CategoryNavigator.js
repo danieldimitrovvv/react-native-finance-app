@@ -5,6 +5,7 @@ import defaultStackNavOptions from '../constants/configurations/defaultStackNavO
 import CategoriesScreen from '../screens/category/CategoriesScreen'
 import AddCategoriesScreen from '../screens/category/AddCategoriesScreen'
 import CategoryDetailsScreen from '../screens/category/CategoryDetailsScreen'
+import i18n from '../constants/configurations/config_languages'
 
 
 
@@ -16,7 +17,7 @@ const CategoriesNavigator = createStackNavigator(
   },
   {
     navigationOptions: {
-      drawerLabel: 'Categories'
+      drawerLabel: i18n.t('categories')
     },
     defaultNavigationOptions: defaultStackNavOptions
   }

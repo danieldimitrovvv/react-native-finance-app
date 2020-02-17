@@ -11,11 +11,13 @@ const CustomPicker = props => {
         flexDirection: props.type ? props.type : 'row'
       }}
     >
-      <View
-        style={{ ...styles.labelContainer, ...props.styles?.labelContainer }}
-      >
-        <InputLabel label={props.label} required={props.required} />
-      </View>
+      {props.label && (
+        <View
+          style={{ ...styles.labelContainer, ...props.styles?.labelContainer }}
+        >
+          <InputLabel label={props.label} required={props.required} />
+        </View>
+      )}
       <View
         style={{ ...styles.pickerContainer, ...props.styles?.pickerContainer }}
       >

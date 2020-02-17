@@ -12,7 +12,6 @@ const defaultStackNavOptions = {
     fontFamily: 'open-sans'
   },
   headerTintColor: Platform.OS === 'android' ? 'white' : Colors.blue.main,
-  headerTitle: 'A Screen'
 }
 
 export default defaultStackNavOptions

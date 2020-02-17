@@ -13,6 +13,7 @@ import ColorRest from '../rests/ColorRest'
 import AccountRest from '../rests/AccountRest'
 
 import CategoryRest from '../rests/CategoryRest'
+import i18n from '../constants/configurations/config_languages'
 
 export default class ScanQRCodeScreen extends React.Component {
   constructor (props) {
@@ -123,7 +124,7 @@ export default class ScanQRCodeScreen extends React.Component {
         {/* <ScrollView> */}
         <View>
           <RadioButtonList
-            label='Select Category'
+            label={i18n.t('select_category')}
             required
             value={this.state.userCategories[0]?.id}
             data={this._mapCategoriesToRadioButtonData()}
@@ -132,7 +133,7 @@ export default class ScanQRCodeScreen extends React.Component {
         </View>
         <View>
           <RadioButtonList
-            label='Select Account'
+            label={i18n.t('select_account')}
             required
             value={this.state.userAccounts[0]?.id}
             data={this._mapAccountsToRadioButtonData()}
@@ -147,11 +148,11 @@ export default class ScanQRCodeScreen extends React.Component {
 
 ScanQRCodeScreen.navigationOptions = navData => {
   return {
-    headerTitle: 'Scan QR Code',
+    headerTitle: i18n.t('scan_qr_code'),
     headerLeft: () => (
       <HeaderButtons HeaderButtonComponent={HeaderButton}>
         <Item
-          title='Menu'
+          title={i18n.t('menu')}
           iconName='ios-menu'
           onPress={() => {
             navData.navigation.toggleDrawer()

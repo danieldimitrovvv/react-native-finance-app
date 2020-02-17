@@ -14,6 +14,7 @@ import HeaderButton from "../components/UI/HeaderButton";
 import Colors, {getColorsTheme, THEME_TYPES} from "../constants/Colors";
 
 import ColorRest from "../rests/ColorRest";
+import i18n from "../constants/configurations/config_languages";
 
 const getChart = (type, theme = THEME_TYPES.ORANGE, key) => {
   switch (type) {
@@ -134,11 +135,11 @@ export default function StatisticsScreen() {
 
 StatisticsScreen.navigationOptions = navData => {
   return {
-    headerTitle: "Statistics",
+    headerTitle: i18n.t('statistics'),
     headerLeft: () => (
       <HeaderButtons HeaderButtonComponent={HeaderButton}>
         <Item
-          title="Menu"
+          title={i18n.t('statistics')}
           iconName="ios-menu"
           onPress={() => {
             navData.navigation.toggleDrawer();

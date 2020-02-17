@@ -3,12 +3,13 @@ import { StyleSheet, ScrollView, Dimensions } from 'react-native'
 import { DataTable, Text } from 'react-native-paper'
 import FormatDate from '../../utility/FormatDate'
 import TransferIcon from '../TransferIcon'
+import i18n from '../../constants/configurations/config_languages'
 
 const TransactionsDataTable = props => {
   return (
     <DataTable style={styles.dataTable}>
       <DataTable.Header>
-        <DataTable.Title>Date</DataTable.Title>
+        <DataTable.Title>{i18n.t('date')}</DataTable.Title>
         <DataTable.Title>$</DataTable.Title>
         <DataTable.Title numeric></DataTable.Title>
       </DataTable.Header>

@@ -4,7 +4,7 @@ import { RadioButton, Surface } from 'react-native-paper'
 import InputLabel from './InputLabel'
 
 const RadioButtonList = props => {
-  const [value, setValue] = useState(null)
+  console.log(props.styles)
   return (
     <Surface style={{ ...styles.container, ...props.styles?.container }}>
       <InputLabel label={props.label} required={props.required}></InputLabel>
@@ -33,7 +33,7 @@ const RadioButtonListItem = props => {
 
 const styles = StyleSheet.create({
   container: {
-    flexDirection: 'column'
+    width: '90%'
   },
   itemContainer: {
     flex: 1,

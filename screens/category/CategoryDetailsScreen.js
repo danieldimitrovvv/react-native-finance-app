@@ -22,6 +22,7 @@ import AccountRest from '../../rests/AccountRest'
 
 import TransactionsDataTable from '../../components/dataTables/TransactionsDataTable'
 import { CATEGORY_TYPES } from '../../models/Category'
+import i18n from '../../constants/configurations/config_languages'
 
 export default class CategoryDetailsScreen extends React.Component {
   static navigationOptions = navData => {
@@ -40,7 +41,7 @@ export default class CategoryDetailsScreen extends React.Component {
         message: null,
         title: null,
         onDismiss: this._hideDialog,
-        buttons: { ok: { onPress: this._hideDialog, label: 'ok' } }
+        buttons: { ok: { onPress: this._hideDialog, label: i18n.t('ok') } }
       },
       categoryId: null,
       category: null,
@@ -52,12 +53,12 @@ export default class CategoryDetailsScreen extends React.Component {
         buttons: {
           ok: {
             onPress: this._addSum,
-            label: 'add',
+            label: i18n.t('add'),
             icon: 'plus',
             disabled: true,
             loading: false
           },
-          cancel: { onPress: this._hideAddSumDialog, label: 'cancel' }
+          cancel: { onPress: this._hideAddSumDialog, label: i18n.t('cancel') }
         }
       },
       userAccounts: [],
@@ -204,7 +205,7 @@ export default class CategoryDetailsScreen extends React.Component {
           {this.state.isLoading ? (
             <ActivityIndicator />
           ) : !this.state.categoryId ? (
-            <Title>Not Added category yet!</Title>
+              <Title>{i18n.t('not_existing_category')}</Title>
           ) : (
             this._renderCategoryCard(this.state.category)
           )}
@@ -218,17 +219,17 @@ export default class CategoryDetailsScreen extends React.Component {
       <Dialog {...this.state.addSumDialog}>
         <Input
           id='addSum'
-          label='Sum'
+          label={i18n.t('sum')}
           keyboardType='decimal-pad'
           required
           autoCapitalize='none'
-          errorText='Please enter a valid sum.'
+          errorText={i18n.t('please_enter_valid_sum')}
           onInputChange={this.inputChangeHandler}
           initialValue=''
         />
         <View>
           <RadioButtonList
-            label='Select Account'
+            label={i18n.t('select_account')}
             required
             value={this.state.userAccounts[0]?.id}
             data={this._mapAccountsToRadioButtonData()}
@@ -265,7 +266,7 @@ export default class CategoryDetailsScreen extends React.Component {
         }}
         buttons={{
           ok: {
-            label: 'Add',
+            label: i18n.t('add'),
             icon: 'plus',
             mode: 'contained',
             loading: this.state.addSumDialog.buttons.ok.loading,
@@ -292,7 +293,7 @@ export default class CategoryDetailsScreen extends React.Component {
   _renderCategoryTransactionsTable = () => {
     let transactions = this.state.transactions
     let Element = !transactions ? (
-      <Title style={styles.message}>Not Added transactions yet!</Title>
+      <Title style={styles.message}>{i18n.t('not_added_transactions_yet')}</Title>
     ) : (
       <TransactionsDataTable
         transactions={transactions}

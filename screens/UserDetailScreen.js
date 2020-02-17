@@ -9,6 +9,7 @@ import Card from '../components/UI/Card'
 import ActivityIndicator from '../components/UI/ActivityIndicator'
 
 import AuthRest from '../rests/AuthRest'
+import i18n from '../constants/configurations/config_languages'
 
 export default class UserDetailScreen extends React.Component {
   constructor (props) {
@@ -69,11 +70,11 @@ export default class UserDetailScreen extends React.Component {
 
 UserDetailScreen.navigationOptions = navData => {
   return {
-    headerTitle: 'My Profile',
+    headerTitle: i18n.t('my_profile'),
     headerLeft: () => (
       <HeaderButtons HeaderButtonComponent={HeaderButton}>
         <Item
-          title='Menu'
+          title={i18n.t('menu')}
           iconName='ios-menu'
           onPress={() => {
             navData.navigation.toggleDrawer()

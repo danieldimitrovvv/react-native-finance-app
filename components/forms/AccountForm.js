@@ -9,17 +9,22 @@ import AuthRest from '../../rests/AuthRest'
 
 import Colors from '../../constants/Colors'
 import AccountRest from '../../rests/AccountRest'
+import i18n from '../../constants/configurations/config_languages'
+import { capitalizeFirst } from '../../utility/Capitalize'
 
 export default class AccountForm extends React.Component {
   constructor (props) {
-    console.log(props.navigation)
     super(props)
     this.state = {
       name: {
         value: null,
         isValid: false
       },
-      availability: {
+      balance: {
+        value: null,
+        isValid: false
+      },
+      goal: {
         value: null,
         isValid: false
       },
@@ -28,7 +33,7 @@ export default class AccountForm extends React.Component {
         message: '',
         title: '',
         onDismiss: this._hideDialog,
-        buttons: { ok: { onPress: this._hideDialog, label: 'ok' } }
+        buttons: { ok: { onPress: this._hideDialog, label: i18n.t('ok') } }
       },
       formIsValid: false,
       isLoading: false
@@ -41,12 +46,12 @@ export default class AccountForm extends React.Component {
   inputChangeHandler = (inputIdentifier, inputValue, inputValidity) => {
     this.setState((state, props) => ({
       [inputIdentifier]: { value: inputValue, isValid: inputValidity },
-      formIsValid: state.name.isValid && state.availability.isValid
+      formIsValid: state.name.isValid && state.balance.isValid
     }))
   }
   submit = () => {
     this.setState({ isLoading: true })
-    AccountRest.add(this.state.name.value, this.state.availability.value)
+    AccountRest.add(this.state.name.value, this.state.balance.value)
       .then(_ => {
         this.setState({ isLoading: false })
         this.props.navigation.navigate('Accounts')
@@ -58,7 +63,7 @@ export default class AccountForm extends React.Component {
             ...state.dialog,
             visible: true,
             message: error,
-            title: 'ERROR'
+            title: i18n.t('error').toUpperCase()
           }
         }))
       })
@@ -73,7 +78,7 @@ export default class AccountForm extends React.Component {
         >
           <Card
             header={{
-              title: 'Account'.toUpperCase(),
+              title: i18n.t('account').toUpperCase(),
               titleStyle: styles.cardHeader
             }}
             style={{ ...styles.container, ...this.props?.style?.container }}
@@ -85,36 +90,36 @@ export default class AccountForm extends React.Component {
                 loading: this.state.isLoading,
                 onPress: this.submit,
                 disabled: !this.state.formIsValid,
-                label: 'Save'
+                label: capitalizeFirst(i18n.t('save'))
               }
             }}
           >
             <Input
               id='name'
-              label='Name'
+              label={capitalizeFirst(i18n.t('name'))}
               keyboardType='default'
               required
               autoCapitalize='none'
-              errorText='Please enter a name.'
+              errorText={i18n.t('please_enter_name')}
               onInputChange={this.inputChangeHandler}
               initialValue=''
             />
             <Input
-              id='availability'
-              label='Availability'
+              id='balance'
+              label={capitalizeFirst(i18n.t('balance'))}
               keyboardType='default'
               required
               autoCapitalize='none'
-              errorText='Please enter a valid availability.'
+              errorText={i18n.t('please_enter_balance')}
               onInputChange={this.inputChangeHandler}
               initialValue=''
             />
             <Input
-              id='purpose'
-              label='Purpose'
+              id='goal'
+              label={capitalizeFirst(i18n.t('goal'))}
               keyboardType='decimal-pad'
               autoCapitalize='none'
-              errorText='Please enter a valid availability.'
+              errorText={i18n.t('please_enter_valid_goal')}
               onInputChange={this.inputChangeHandler}
               initialValue=''
             />

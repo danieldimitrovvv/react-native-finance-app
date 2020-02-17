@@ -12,15 +12,16 @@ import Dialog from '../../components/UI/Dialog'
 import CategoriesList from '../../components/dataLists/CategoriesList'
 
 import CategoryRest from '../../rests/CategoryRest'
+import i18n from '../../constants/configurations/config_languages'
 
 export default class CategoriesScreen extends React.Component {
   static navigationOptions = navData => {
     return {
-      headerTitle: 'Categories',
+      headerTitle: i18n.t('categories'),
       headerLeft: () => (
         <HeaderButtons HeaderButtonComponent={HeaderButton}>
           <Item
-            title='Menu'
+            title={i18n.t('menu')}
             iconName='ios-menu'
             onPress={() => {
               navData.navigation.toggleDrawer()
@@ -31,7 +32,7 @@ export default class CategoriesScreen extends React.Component {
       headerRight: () => (
         <HeaderButtons HeaderButtonComponent={HeaderButton}>
           <Item
-            title='Add'
+            title={i18n.t('add')}
             iconName={Platform.OS === 'android' ? 'md-add' : 'ios-add'}
             onPress={() => {
               navData.navigation.navigate('AddCategory')
@@ -52,7 +53,7 @@ export default class CategoriesScreen extends React.Component {
         message: null,
         title: null,
         onDismiss: this._hideDialog,
-        buttons: { ok: { onPress: this._hideDialog, label: 'ok' } }
+        buttons: { ok: { onPress: this._hideDialog, label: i18n.t('ok') } }
       },
       categories: []
     }
@@ -86,7 +87,7 @@ export default class CategoriesScreen extends React.Component {
           {this.state.isLoading ? (
             <ActivityIndicator />
           ) : this.state.categories.length === 0 ? (
-            <Title>Not Added categories yet!</Title>
+              <Title>{i18n.t('not_added_categories_yet')}</Title>
           ) : (
             <CategoriesList
               categories={this.state.categories}

@@ -6,7 +6,7 @@ import Colors from '../Colors'
 import StatisticsNavigator from '../../navigation/StatisticsNavigator'
 import AccountsNavigator from '../../navigation/AccountNavigator'
 import CategoriesNavigator from '../../navigation/CategoryNavigator'
-
+import i18n from './config_languages'
 
 const tabScreenConfig = {
   Statistics: {
@@ -19,10 +19,10 @@ const tabScreenConfig = {
       tabBarLabel:
         Platform.OS === 'android' ? (
           <Text style={{ fontFamily: 'open-sans-bold', color: 'white' }}>
-            Statistics
+            {i18n.t('statistics')}
           </Text>
         ) : (
-          'Statistics'
+          i18n.t('statistics')
         )
     }
   },
@@ -36,10 +36,10 @@ const tabScreenConfig = {
       tabBarLabel:
         Platform.OS === 'android' ? (
           <Text style={{ fontFamily: 'open-sans-bold', color: 'white' }}>
-            Accounts
+            {i18n.t('accounts')}
           </Text>
         ) : (
-          'Accounts'
+          i18n.t('statistics')
         )
     }
   },
@@ -53,10 +53,10 @@ const tabScreenConfig = {
       tabBarLabel:
         Platform.OS === 'android' ? (
           <Text style={{ fontFamily: 'open-sans-bold', color: 'white' }}>
-            Categories
+            {i18n.t('categories')}
           </Text>
         ) : (
-          'Categories'
+          i18n.t('categories')
         )
     }
   }

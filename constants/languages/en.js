@@ -1,0 +1,76 @@
+export default {
+  statistics: 'Statistics',
+  logout: 'Logout',
+  scan_qr_code: 'Scan QR Code',
+  scan_again: 'Scan Again',
+  my_profile: 'My Profile',
+  ok: 'ok',
+  cancel: 'cancel',
+  save: 'save',
+  add: 'add',
+  sum: 'sum',
+  menu: 'menu',
+  login: 'login',
+  signup: 'signup',
+  bar_cod_type_and_data_is_not_correct:
+    'Bar code type and data is not correct!',
+  error: 'error',
+  no_access_to_camera: 'No access to camera.',
+  requesting_for_camera_permission: 'Requesting for camera permission.',
+  date: 'date',
+  name: 'name',
+  email: 'email',
+  age: 'age',
+  gender: 'gender',
+  family_status: 'Family Status',
+  education: 'education',
+
+  // accounts
+  accounts: 'Accounts',
+  account: 'account',
+  select_account: 'Select Account',
+  not_added_accounts_yet: 'Not added accounts yet!',
+  not_existing_account: 'Not existing account!',
+
+  // transactions
+  transactions: 'Transactions',
+  not_added_transactions_yet: 'Not added transactions yet!',
+
+  // users
+  users: 'Users',
+  not_added_users_yet: 'Not added users yet!',
+
+  // categories
+  categories: 'Categories',
+  category: 'category',
+  select_category: 'Select Category',
+  not_added_categories_yet: 'Not added categories yet!',
+  not_existing_category: 'Not existing category!',
+
+  // User input messages
+  please_enter_valid_sum: 'Please enter a valid sum!',
+  please_enter_name: 'Please enter a name.',
+  balance: 'balance',
+  please_enter_balance: 'Please enter a valid balance.',
+  goal: 'goal',
+  please_enter_valid_goal: 'Please enter a valid goal.',
+  please_select_category_type: 'Please select a category type.',
+  type: 'type',
+  income: 'income',
+  expense: 'expense',
+  limit: 'limit',
+  please_enter_valid_limit: 'Please enter a valid limit.',
+  limit_in: 'limit in',
+  please_enter_valid_email: 'Please enter a valid email address.',
+  password: 'password',
+  please_enter_valid_password: 'Please enter a valid password.',
+  confirm_password: 'confirm password',
+  please_enter_valid_confirm_password: 'Please enter a valid confirm password.',
+  male: 'male',
+  female: 'female',
+  single: 'single',
+  married: 'Married',
+  cohabitation: 'cohabitation',
+  widow_or_widower: 'widow / widower',
+  other: 'other'
+}

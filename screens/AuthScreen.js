@@ -11,25 +11,19 @@ import { HeaderButtons, Item } from 'react-navigation-header-buttons'
 import HeaderButton from '../components/UI/HeaderButton'
 import LoginForm from '../components/forms/LoginForm'
 import RegisterForm from '../components/forms/RegisterForm'
+import i18n from '../constants/configurations/config_languages'
 
 const AuthScreen = props => {
   const [isLoginForm, setIsLoginForm] = useState(true)
   const [isLoading, setIsLoading] = useState(false)
-  // const [error, setError] = useState();
 
   const changeFormHandler = useCallback(() => {
     setIsLoginForm(!isLoginForm)
   }, [isLoginForm, setIsLoginForm])
 
-  // useEffect(() => {
-  //   if (error) {
-  //     Alert.alert("An error occurred!", error, [{ text: "Okay" }]);
-  //   }
-  // }, [error]);
-
   useEffect(() => {
     props.navigation.setParams({ changeFormFn: changeFormHandler })
-    props.navigation.setParams({ btnLabel: isLoginForm ? 'Login' : 'Signup' })
+    props.navigation.setParams({ btnLabel: isLoginForm ? i18n.t('login') : i18n.t('signup') })
   }, [changeFormHandler])
 
   return (

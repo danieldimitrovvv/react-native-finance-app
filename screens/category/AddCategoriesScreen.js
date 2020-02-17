@@ -10,15 +10,16 @@ import HeaderButton from '../../components/UI/HeaderButton'
 import ActivityIndicator from '../../components/UI/ActivityIndicator'
 import Dialog from '../../components/UI/Dialog'
 import CategoryForm from '../../components/forms/CategoryForm'
+import i18n from '../../constants/configurations/config_languages'
 
 export default class AddCategoriesScreen extends React.Component {
   static navigationOptions = navData => {
     return {
-      headerTitle: 'Categories',
+      headerTitle: i18n.t('categories'),
       headerRight: () => (
         <HeaderButtons HeaderButtonComponent={HeaderButton}>
           <Item
-            title='Save'
+            title={i18n.t('save')}
             iconName={Platform.OS === 'android' ? 'md-save' : 'ios-save'}
             onPress={() => navData.navigation.navigate('Categories')}
           />
@@ -37,7 +38,7 @@ export default class AddCategoriesScreen extends React.Component {
         message: null,
         title: null,
         onDismiss: this._hideDialog,
-        buttons: { ok: { onPress: this._hideDialog, label: 'ok' } }
+        buttons: { ok: { onPress: this._hideDialog, label: i18n.t('ok') } }
       },
     }
   }

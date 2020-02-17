@@ -9,13 +9,14 @@ import TabNavigator from './TabNavigator'
 import UserNavigator from './UserNavigator'
 import ScanQRCodeNavigator from './ScanQRCodeNavigator'
 import AuthNavigator from './AuthNavigator'
+import i18n from '../constants/configurations/config_languages'
 
 const MainNavigatorSettings = {
   Startup: StartupScreen,
   TabNavigator: {
     screen: TabNavigator,
     navigationOptions: {
-      drawerLabel: 'Statistics'
+      drawerLabel: i18n.t('statistics')
     }
   },
   UserDetail: UserNavigator,
