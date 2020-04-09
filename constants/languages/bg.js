@@ -46,6 +46,7 @@ export default {
   select_category: 'Избери Категория',
   not_added_categories_yet: 'Още няма добавежи категории!',
   not_existing_category: 'Несъществуваща категория!',
+  added_to_category:'Добавяне в категория',
 
   // User input messages
   please_enter_valid_sum: 'Моля въведете валидна сума!',

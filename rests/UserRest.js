@@ -1,52 +1,31 @@
-import Users from '../constants/storage/users'
 import MainRest from './MainRest'
+import AuthRest from './AuthRest';
 
 class UserRest extends MainRest {
-  users = Users
 
   constructor () {
     super()
-  }
-
-  getByEmailAndPassword = (email, password) => {
-    let searchUser = this.users.find(
-      u => u.email == email && u.password == password
-    )
-    return new Promise((resolve, reject) => {
-      setTimeout(() => {
-        if (searchUser) resolve(searchUser)
-        else reject('Incorrect credentials?')
-      }, 300)
-    })
+    this.getInstance().defaults.baseURL += 'users';
   }
 
   getById = id => {
-    let searchUser = this.users.find(u => u.id == id)
-    return new Promise((resolve, reject) => {
-      setTimeout(() => {
-        if (searchUser) resolve(searchUser)
-        else reject('Incorrect user ID!!!')
-      }, 300)
-    })
+    this.setHeaders({'Authorization': 'Bearer ' + AuthRest.getToken()})
+    return this.getInstance().get('/'+ id)
   }
 
-  register = (email, password, gender, familyStatus, education, age) => {
-    const id = (new Date().getTime() * new Date().getTime()) / 13
-    this.users.push({
-      id,
+  register = (email, name, password, gender, familyStatus, education, age) => {
+   const data = {
       email,
+      name,
       password,
       gender,
       familyStatus,
       education,
       age
-    })
-
-    return new Promise((resolve, reject) => {
-      setTimeout(() => {
-        resolve(id)
-      }, 300)
-    })
+    };
+    this.getInstance().defaults.headers.post['Content-Type'] = 'application/json';
+    // return this.getInstance().post('users', data)
+    return this.getInstance().post('', data)
   }
 
 }

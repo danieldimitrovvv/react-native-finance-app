@@ -78,15 +78,16 @@ export default class RegisterForm extends React.Component {
 
   onSubmit = () => {
     this.setState({ isLoading: true })
-    UserRest.registerUser(
+    UserRest.register(
       this.state.email.value,
+      this.state.name.value,
       this.state.password.value,
       this.state.gender.value,
       this.state.familyStatus.value,
       this.state.education.value,
       this.state.age.value
     )
-      .then(userId => {
+      .then(_ => {
         this.setState({ isLoading: false })
         this.props.changeFormHandler()
       })
@@ -96,7 +97,7 @@ export default class RegisterForm extends React.Component {
           dialog: {
             ...state.dialog,
             visible: true,
-            message: error,
+            message: error.response.data.error,
             title: i18n.t('error').toUpperCase()
           }
         }))

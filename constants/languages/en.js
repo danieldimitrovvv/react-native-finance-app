@@ -46,6 +46,7 @@ export default {
   select_category: 'Select Category',
   not_added_categories_yet: 'Not added categories yet!',
   not_existing_category: 'Not existing category!',
+  added_to_category:'Added to category',
 
   // User input messages
   please_enter_valid_sum: 'Please enter a valid sum!',

@@ -31,7 +31,7 @@ export default class CategoryDetailsScreen extends React.Component {
     }
   }
 
-  constructor (props) {
+  constructor(props) {
     super(props)
     this.state = {
       theme: 'blue',
@@ -75,7 +75,7 @@ export default class CategoryDetailsScreen extends React.Component {
     }
   }
 
-  componentDidMount () {
+  componentDidMount() {
     const categoryId = +this.props.navigation.getParam('categoryId')
     this.setState({
       isLoading: true,
@@ -195,7 +195,7 @@ export default class CategoryDetailsScreen extends React.Component {
       value: account.id
     }))
 
-  render () {
+  render() {
     return (
       <Provider>
         <View style={styles.container}>
@@ -205,10 +205,10 @@ export default class CategoryDetailsScreen extends React.Component {
           {this.state.isLoading ? (
             <ActivityIndicator />
           ) : !this.state.categoryId ? (
-              <Title>{i18n.t('not_existing_category')}</Title>
+            <Title>{i18n.t('not_existing_category')}</Title>
           ) : (
-            this._renderCategoryCard(this.state.category)
-          )}
+                this._renderCategoryCard(this.state.category)
+              )}
         </View>
       </Provider>
     )
@@ -231,7 +231,7 @@ export default class CategoryDetailsScreen extends React.Component {
           <RadioButtonList
             label={i18n.t('select_account')}
             required
-            value={this.state.userAccounts[0]?.id}
+            value={this.state.selectedAccountID ? this.state.selectedAccountID : this.state.userAccounts[0]?.id}
             data={this._mapAccountsToRadioButtonData()}
             onValueChange={this._changeSelectAccountHandler}
           />
@@ -242,7 +242,7 @@ export default class CategoryDetailsScreen extends React.Component {
 
   _renderCategoryCard = category => {
     const icon = this._getCardIconByType(category.type)
-    return  (
+    return (
       <Card
         key={category.id}
         card={{
@@ -295,12 +295,12 @@ export default class CategoryDetailsScreen extends React.Component {
     let Element = !transactions ? (
       <Title style={styles.message}>{i18n.t('not_added_transactions_yet')}</Title>
     ) : (
-      <TransactionsDataTable
-        transactions={transactions}
-        transactionPagination={this.state.transactionPagination}
-        changeTransactionsPage={this._changeTransactionsPage}
-      />
-    )
+        <TransactionsDataTable
+          transactions={transactions}
+          transactionPagination={this.state.transactionPagination}
+          changeTransactionsPage={this._changeTransactionsPage}
+        />
+      )
 
     return Element
   }

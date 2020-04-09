@@ -27,8 +27,8 @@ export default class ScanQRCodeScreen extends React.Component {
         title: null,
         onDismiss: this._hideDialog,
         buttons: {
-          ok: { onPress: this._addSumToCategory, label: 'ok' },
-          cancel: { onPress: this._hideDialog, label: 'Cancel' }
+          ok: { onPress: this._addSumToCategory, label: i18n.t('add') },
+          cancel: { onPress: this._hideDialog, label: i18n.t('cancel') }
         }
       },
       userCategories: [],
@@ -108,7 +108,7 @@ export default class ScanQRCodeScreen extends React.Component {
           {this._renderAddSumDialog()}
           <ScannerQRCode
             resultCard={{
-              title: 'Added to category',
+              title: i18n.t('added_to_category'),
               icon: 'plus',
               onPress: this._submitCardHandler
             }}
@@ -126,7 +126,7 @@ export default class ScanQRCodeScreen extends React.Component {
           <RadioButtonList
             label={i18n.t('select_category')}
             required
-            value={this.state.userCategories[0]?.id}
+            value={this.state.selectedCategoryID ? this.state.selectedCategoryID : this.state.userCategories[0]?.id}
             data={this._mapCategoriesToRadioButtonData()}
             onValueChange={this._changeSelectCategoryHandler}
           />
@@ -135,7 +135,7 @@ export default class ScanQRCodeScreen extends React.Component {
           <RadioButtonList
             label={i18n.t('select_account')}
             required
-            value={this.state.userAccounts[0]?.id}
+            value={this.state.selectedAccountID ? this.state.selectedAccountID : this.state.userAccounts[0]?.id}
             data={this._mapAccountsToRadioButtonData()}
             onValueChange={this._changeSelectAccountHandler}
           />

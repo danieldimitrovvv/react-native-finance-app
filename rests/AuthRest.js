@@ -1,16 +1,17 @@
-import UserRest from './UserRest'
 import MainRest from './MainRest'
 
 class AuthRest extends MainRest {
   timer = null
   userId = null
   token = null
+  userDetail = null
 
-  constructor () {
+  constructor() {
     super()
+    this.getInstance().defaults.baseURL = this.getInstance().defaults.baseURL + 'auth';
   }
 
-  isAuth () {
+  isAuth() {
     return this.token != null
   }
 
@@ -30,23 +31,35 @@ class AuthRest extends MainRest {
     this.userId = userId
   }
 
-  getUserDetail () {
-    return UserRest.getById(this.userId)
+  getUserDetail() {
+    return this.userDetail
   }
 
   login = async (email, password) => {
-    let userDetail = await UserRest.getByEmailAndPassword(email, password)
-    if (userDetail) {
-      this.setToken(userDetail.email)
-      this.setAuthUserId(userDetail.id)
+    const data = {
+      username: email,
+      password: password
     }
+
+    return this.getInstance().post('/login', data).then(response => {
+      this.userDetail = {
+        username: response.data.username,
+        displayName: response.data.displayName,
+        role: response.data.role,
+      }
+      this.token = response.data.token
+      return response
+    })
   }
 
   logout = () => {
-    clearLogoutTimer()
-    this.setToken(null)
-    this.setAuthUserId(null)
-    AsyncStorage.removeItem('userData')
+    return this.getInstance().get('/logout').then(response => {
+      clearLogoutTimer()
+      this.setToken(null)
+      this.setAuthUserId(null)
+      AsyncStorage.removeItem('userData')
+      return response
+    })
   }
 
   clearLogoutTimer = () => {

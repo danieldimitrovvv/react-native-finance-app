@@ -4,7 +4,7 @@ import { StyleSheet, KeyboardAvoidingView, View } from 'react-native'
 import Card from '../UI/Card'
 import Input from '../UI/Input'
 import Dialog from '../UI/Dialog'
-import  Button  from '../UI/Button'
+import Button from '../UI/Button'
 
 import AuthRest from '../../rests/AuthRest'
 
@@ -13,7 +13,7 @@ import i18n from '../../constants/configurations/config_languages'
 import { capitalizeFirst } from '../../utility/Capitalize'
 
 export default class LoginForm extends React.Component {
-  constructor (props) {
+  constructor(props) {
     super(props)
     this.state = {
       email: {
@@ -58,13 +58,13 @@ export default class LoginForm extends React.Component {
           dialog: {
             ...state.dialog,
             visible: true,
-            message: error,
+            message: error.response.data.error,
             title: i18n.t('error').toUpperCase()
           }
         }))
       })
   }
-  render () {
+  render() {
     return (
       <React.Fragment>
         <KeyboardAvoidingView
@@ -105,7 +105,7 @@ export default class LoginForm extends React.Component {
               autoCapitalize='none'
               errorText={i18n.t('please_enter_valid_email')}
               onInputChange={this.inputChangeHandler}
-              initialValue='dan@abv.b'
+              initialValue='danieldimitrovvv@abv.bg'
             />
 
             <Input
@@ -119,7 +119,7 @@ export default class LoginForm extends React.Component {
               secureTextEntry={true}
               errorText={i18n.t('please_enter_valid_password')}
               onInputChange={this.inputChangeHandler}
-              initialValue='12'
+              initialValue='Dan95iel!'
             />
             <Button
               icon='registered-trademark'

@@ -28,7 +28,7 @@ export default class ScannerQRCode extends React.Component {
         message: '',
         title: '',
         onDismiss: this._hideDialog,
-        buttons: { ok: { onPress: this._hideDialog, label: 'ok' } }
+        buttons: { ok: { onPress: this._hideDialog, label: i18n.t('ok') } }
       }
     }
   }
